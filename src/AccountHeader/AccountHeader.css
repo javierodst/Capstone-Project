@@ -1,0 +1,66 @@
+.accountHeader .top {
+  background-color: rgb(13, 45, 62);
+  height: 50px;
+  display:block;
+}
+
+.accountHeader .top .topText {
+  float: right;
+  color: white;
+  margin-right: 70px;
+  margin-top: 10px;
+}
+
+.accountHeader .bottom {
+  background-color: white;
+  height: 100px;
+  display: block;
+}
+
+#logo{
+  letter-spacing: 2px;
+  font-size: 20px;
+  float: left;
+  display: block;
+  text-align: center;
+  padding: 14px 30px;
+  margin-left: 100px;
+}
+
+#logo #inner{
+  color: #3e0d14;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.accountHeader .bottom .bottomText{
+  color:  rgb(13, 45, 62);
+  margin-right: 100px;
+}
+
+ul {
+  list-style-type: none;
+  background-color: white;
+}
+
+li{
+  float: right;
+}
+
+li a {
+  display: block;
+  text-align: center;
+  padding: 14px 30px;
+  color: rgb(13, 45, 62);
+  text-decoration: none;
+  font-size: 18px;
+}
+
+li a:hover:not(.active) {
+  font-weight: bold;
+  color: #3e0d14;
+}
+
+.active {
+  /*underline*/
+}
