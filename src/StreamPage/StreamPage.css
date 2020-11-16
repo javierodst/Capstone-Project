@@ -1,0 +1,18 @@
+
+.main{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.player{
+    margin-top: 5%;
+    width: 1280;
+    height: 720;
+    border: 1px solid grey;
+}
+
+button{
+    margin-top: 10px;
+}
