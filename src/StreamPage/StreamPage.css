@@ -40,3 +40,34 @@
 .start-btn{
     background-color: rgb(37, 175, 37);
 }
+
+.thumbnails {
+    max-width:80%;
+    margin:auto;
+    margin-top: 50px;
+}
+
+.title {
+    max-width:80%;
+    margin:auto;
+    text-align: center;
+    margin-top: 50px;
+    margin-bottom: 50px;
+}
+
+.hour {
+    margin-right: 30px;
+    margin-left: 30px;
+   margin-bottom: 30px;
+   float:left;
+}
+
+.savebtn {
+    color:white;
+    background: rgb(13, 45, 62);
+    padding: .2rem .4rem;
+    border: 1px solid transparent;
+    border-radius: .25rem;
+    bottom: 30px;
+    font-family: Arial, Helvetica, sans-serif;
+}

@@ -45,7 +45,7 @@ class SavedFootage extends React.Component {
                     <source src="/Videos/practice_12.mp4" type="video/MP4" />
                 </video>
                 <video width="325" height = "200" controls="controls" preload="metadata">
-                    <source src="/Videos/practice_13.mp4" type="video/MP4" />
+                    <source src="/Videos/practice_10.mp4" type="video/MP4" />
                 </video>
                 <video width="325" height = "200" controls="controls" preload="metadata">
                     <source src="/Videos/practice_14.mp4" type="video/MP4" />
