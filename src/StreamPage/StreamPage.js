@@ -7,7 +7,7 @@ class StreamPage extends React.Component {
     constructor(props) {
         super(props);
 
-        this.state = { playing: false, setStreaming: false, videoSrc: null };
+        this.state = { playing: false, setStreaming: false };
 
     };
 
@@ -30,10 +30,10 @@ class StreamPage extends React.Component {
         );
     };
 
-    stopVideo = () => {
+    stopStream = () => {
         this.setState({ playing: false });
         let video = document.getElementsByClassName('feed')[0];
-        video.srcObject.getTracts()[0].stop();
+        video.srcObject.getTracks()[0].stop();
     };
 
     handleError = () => {
@@ -53,20 +53,25 @@ class StreamPage extends React.Component {
                         width={1280}
                         autoPlay="true"
                         className="feed"
-
-
                     >
 
                     </video>
-
 
                 </div>
 
                 <div className="playerInput">
                     {this.state.playing ? (
-                        <button onClick={this.stopStream}>Stop</button>
+                        <div>
+                            <br />
+                            <a onClick={this.stopStream} className="btn stop-btn">Stop</a>
+                            &nbsp;&nbsp;&nbsp;
+                            {/*<a className="btn screenshot-btn">Screenshot</a>*/}
+                        </div>
                     ) : (
-                            <button onClick={this.startStream}>Start</button>
+                            <div>
+                                <br />
+                                <a onClick={this.startStream} className="btn start-btn">Start</a>
+                            </div>
                         )}
                 </div>
 

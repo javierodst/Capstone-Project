@@ -16,7 +16,6 @@ function App() {
 
       <AccountHeader />
 
-
       <Switch>
         <Route exact path='/' render={() => <Home />} />
         <Route exact path='/signin' render={() => <SignIn />} />

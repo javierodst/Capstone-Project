@@ -5,15 +5,38 @@
     justify-content: center;
     align-items: center;
     background-color: rgb(247,247,247);
+    padding-top: 0px;
+
 }
 
 .player{
-    margin-top: 5%;
-    width: 1280;
-    height: 720;
-    border: 1px solid grey;
+    
 }
 
-button{
+.btn{
     margin-top: 10px;
+    border: 1px solid rgb(170, 170, 170);
+    padding: .5em;
+    color: black;
+    
+    text-decoration: none;
+    border-radius: 7px;
+
+}
+.btn:hover{
+    background-color: lightgray;
+}
+
+.stop-btn{
+    background-color: rgb(231, 49, 49);
+}
+
+.stop-btn:hover{
+   background-color: rgb(226, 14, 14);
+}
+
+
+
+.start-btn{
+    background-color: rgb(37, 175, 37);
 }
