@@ -1,0 +1,89 @@
+  #logo{
+    letter-spacing: 2px;
+    font-size: 20px;
+    float: left;
+    display: block;
+    text-align: center;
+    padding: 14px 30px;
+    margin-left: 100px;
+  }
+  
+  #logo #inner{
+    color: #3e0d14;
+    font-size: 28px;
+    font-weight: bold;
+  }
+
+  .Header .top {
+    background-color: rgb(13, 45, 62);
+    height: 50px;
+    display:block;
+  }
+  
+  .Header .top .topText {
+    float: right;
+    color: white;
+    margin-right: 70px;
+    margin-top: 10px;
+  }
+  
+  .Header .bottom {
+    background-color: white;
+    height: 100px;
+    display: block;
+  }
+  
+  .Header .bottom .bottomText{
+    color:  rgb(13, 45, 62);
+    margin-right: 100px;
+  }
+  
+  .bottom .bottomText ul {
+    list-style-type: none;
+    background-color: white;
+  }
+  
+  .bottom .bottomText ul li{
+    float: right;
+  }
+  
+  .bottom .bottomText ul li a {
+    display: block;
+    text-align: center;
+    padding: 14px 30px;
+    color: rgb(13, 45, 62);
+    text-decoration: none;
+    font-size: 18px;
+  }
+  
+  .bottom .bottomText ul li a:hover:not(.active) {
+    font-weight: bold;
+    color: #3e0d14;
+  }
+
+  .top .topText ul {
+    list-style-type: none;
+    /*background-color: white;*/
+  }
+  
+  .top .topText ul li{
+    float: right;
+  }
+  
+  .top .topText ul li a {
+    display: block;
+    text-align: center;
+    padding: 14px 30px;
+    /*color: rgb(13, 45, 62);*/
+    text-decoration: none;
+    font-size: 18px;
+  }
+  
+  .top .topText ul li a:hover:not(.active) {
+    font-weight: bold;
+    color: #3e0d14;
+  }
+  
+  .active {
+    /*underline*/
+  }
