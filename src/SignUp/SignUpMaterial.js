@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import './SignUpMaterial.css';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -12,6 +13,8 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+import axios from 'axios';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 // We can use inline-style to overide styles
 const buttonStyle = {  //to change signin button color
@@ -59,10 +62,75 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+//properties with default values
+const initialValues = {
+  firstName: '',
+  lastName: '',
+  email: '',
+  username: '',
+  companyname: '',
+  cpassword: ''
+}
+
 export default function SignUpMaterial() {
   const classes = useStyles();
+  const [values, setValues] = useState(initialValues);
+
+  const handleInputChange = event =>{
+    const {name, value} = event.target
+    setValues({
+      ...values,
+      [name]:value
+    })
+    console.log('State: ', name, value)
+  };
+
+  const submit = event =>{
+    event.preventDefault();
+    //payload is the data that you are sending
+    const payload = {
+      firstName: values.firstName,
+      lastName: values.lastName,
+      email: values.email,
+      username: values.username,
+      companyname: values.companyname,
+      cpassword: values.cpassword
+    };
+
+    //make http call, default uses get
+    axios({
+      url: 'http://localhost:8080/api/register',
+      method: 'POST',
+      data: payload
+    })
+    .then(()=> {
+      console.log('Data has been sent to the server');
+    })
+    .catch(()=> {
+      console.log('Internal Server Error');
+    });
+  };
+
+  const usePasswordToggle = () => {
+    const [visible, setVisibility] = useState(false);
+
+    const Icon = (
+    <FontAwesomeIcon
+        icon = {visible ? "eye-slash" : "eye" }
+        onClick={() => setVisibility(visibility => !visibility)}
+    />
+    )
+
+    const InputType = visible ? "Text" : "Password";
+
+    return [InputType, Icon];
+
+};
+
+  const [PasswordInputType, ToggleIcon] = usePasswordToggle();
 
   return (
+
     <Container component="main" maxWidth="xs">
       <CssBaseline />
       <div className={classes.paper}>
@@ -72,18 +140,20 @@ export default function SignUpMaterial() {
         <Typography component="h1" variant="h5">
           Sign up
         </Typography>
-        <form className={classes.form} noValidate>
+        <form onSubmit={submit} className={classes.form} noValidate>
           <Grid container spacing={2}>
             <Grid item xs={12} sm={6}>
               <TextField
                 autoComplete="fname"
                 name="firstName"
+                value={values.firstName}
                 variant="outlined"
                 required
                 fullWidth
                 id="firstName"
                 label="First Name"
                 autoFocus
+                onChange={handleInputChange}
               />
             </Grid>
             <Grid item xs={12} sm={6}>
@@ -94,7 +164,9 @@ export default function SignUpMaterial() {
                 id="lastName"
                 label="Last Name"
                 name="lastName"
+                value={values.lastName}
                 autoComplete="lname"
+                onChange={handleInputChange}
               />
             </Grid>
             <Grid item xs={12}>
@@ -105,7 +177,9 @@ export default function SignUpMaterial() {
                 id="email"
                 label="Email Address"
                 name="email"
+                value={values.email}
                 autoComplete="email"
+                onChange={handleInputChange}
               />
             </Grid>
             <Grid item xs={12} sm={6}>
@@ -114,9 +188,11 @@ export default function SignUpMaterial() {
                 required
                 fullWidth
                 name="username"
+                value={values.username}
                 label="Username"
                 id="username"
                 autoComplete="uname"
+                onChange={handleInputChange}
               />
             </Grid>
             <Grid item xs={12} sm={6}>
@@ -124,9 +200,11 @@ export default function SignUpMaterial() {
                 variant="outlined"
                 fullWidth
                 name="companyname"
+                value={values.companyname}
                 label="Company Name"
                 id="companyname"
                 autoComplete="cname"
+                onChange={handleInputChange}
               />
             </Grid>
             <Grid item xs={12}>
@@ -136,10 +214,13 @@ export default function SignUpMaterial() {
                 fullWidth
                 name="password"
                 label="Password"
-                type="password"
+                type={PasswordInputType}
                 id="password"
                 autoComplete="current-password"
-              />
+              /> 
+              <span className="password-toggle-icon">
+                {ToggleIcon}
+              </span>
             </Grid>
             <Grid item xs={12}>
               <TextField
@@ -147,10 +228,12 @@ export default function SignUpMaterial() {
                 required
                 fullWidth
                 name="cpassword"
+                value={values.cpassword}
                 label="Confirm Password"
                 type="password"
                 id="cpassword"
                 autoComplete="cpassword"
+                onChange={handleInputChange}
               />
             </Grid>
            {/* <Grid item xs={12}>

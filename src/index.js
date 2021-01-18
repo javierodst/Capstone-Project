@@ -4,7 +4,11 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter } from 'react-router-dom';
+//adding font awesome icons by building a library
+import { library } from "@fortawesome/fontawesome-svg-core";
+import {faEye, faEyeSlash} from "@fortawesome/free-solid-svg-icons";
 
+library.add(faEye, faEyeSlash);
 
 ReactDOM.render(
   <BrowserRouter foo="bar">
