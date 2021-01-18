@@ -69,6 +69,7 @@ const initialValues = {
   email: '',
   username: '',
   companyname: '',
+  password: '',
   cpassword: ''
 }
 
@@ -87,29 +88,36 @@ export default function SignUpMaterial() {
 
   const submit = event =>{
     event.preventDefault();
-    //payload is the data that you are sending
-    const payload = {
-      firstName: values.firstName,
-      lastName: values.lastName,
-      email: values.email,
-      username: values.username,
-      companyname: values.companyname,
-      cpassword: values.cpassword
-    };
+        //payload is the data that you are sending
+          const payload = {
+            firstName: values.firstName,
+            lastName: values.lastName,
+            email: values.email,
+            username: values.username,
+            companyname: values.companyname,
+            cpassword: values.cpassword
+        };
+    
+    if(values.cpassword == values.password){  //only creates user account if passwords match
 
-    //make http call, default uses get
-    axios({
-      url: 'http://localhost:8080/api/register',
-      method: 'POST',
-      data: payload
-    })
-    .then(()=> {
-      console.log('Data has been sent to the server');
-    })
-    .catch(()=> {
-      console.log('Internal Server Error');
-    });
-  };
+      //make http call, default uses get
+      axios({
+        url: 'http://localhost:8080/api/register',
+        method: 'POST',
+        data: payload
+      })
+      .then(()=> {
+        console.log('Data has been sent to the server');
+      })
+      .catch(()=> {
+        console.log('Internal Server Error');
+      });
+    }
+    else if(values.cpassword != values.password){
+      //error message
+      console.log('passwords do not match!');
+    }
+};
 
   const usePasswordToggle = () => {
     const [visible, setVisibility] = useState(false);
@@ -213,10 +221,12 @@ export default function SignUpMaterial() {
                 required
                 fullWidth
                 name="password"
+                value={values.password}
                 label="Password"
-                type={PasswordInputType}
+                type="password"
                 id="password"
                 autoComplete="current-password"
+                onChange={handleInputChange}
               /> 
               <span className="password-toggle-icon">
                 {ToggleIcon}
