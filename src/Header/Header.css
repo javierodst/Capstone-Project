@@ -1,3 +1,6 @@
+/*needed or else space above header*/
+html, *, body { margin: 0px; padding: 0px; }
+
   #logo{
     letter-spacing: 2px;
     font-size: 20px;
@@ -14,12 +17,23 @@
     font-weight: bold;
   }
 
+  .Header{
+    height: 130px;
+  }
+
   .Header .top {
     background-color: rgb(13, 45, 62);
     height: 50px;
     display:block;
   }
   
+  .Header .top .hours {
+    position:relative;
+    color: white;
+    left: 70px;
+    top: 8px;
+  }
+
   .Header .top .topText {
     float: right;
     color: white;
@@ -29,7 +43,7 @@
   
   .Header .bottom {
     background-color: white;
-    height: 100px;
+    height: 80px;
     display: block;
   }
   
@@ -74,7 +88,6 @@
     display: block;
     text-align: center;
     padding: 14px 30px;
-    /*color: rgb(13, 45, 62);*/
     text-decoration: none;
     font-size: 18px;
   }
@@ -87,3 +100,9 @@
   .active {
     /*underline*/
   }
+
+  .signinBtn{
+
+  }
+
+  

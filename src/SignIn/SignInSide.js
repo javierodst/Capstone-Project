@@ -1,5 +1,6 @@
 /*Using Material-UI -> React UI framework */
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import './SignIn.css';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -13,6 +14,7 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
   
 // We can use inline-style to overide styles
 const buttonStyle = {  //to change signin button color
@@ -64,6 +66,25 @@ const useStyles = makeStyles((theme) => ({
 export default function SignInSide() {
   const classes = useStyles();
 
+//for password visibilityOn/Off
+const usePasswordToggle = () => {
+  const [visible, setVisibility] = useState(false);
+
+  const Icon = (
+  <FontAwesomeIcon
+      icon = {visible ? "eye-slash" : "eye" }
+      onClick={() => setVisibility(visibility => !visibility)}
+  />
+  )
+
+  const InputType = visible ? "Text" : "Password";
+
+  return [InputType, Icon];
+
+};
+
+const [PasswordInputType, ToggleIcon] = usePasswordToggle();
+
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
@@ -93,10 +114,13 @@ export default function SignInSide() {
             fullWidth
             name="password"
             label="Password"
-            type="password"
+            type={PasswordInputType}
             id="password"
             autoComplete="current-password"
           />
+            <span className="password-icon">
+                {ToggleIcon}
+              </span>
           <FormControlLabel
             control={<Checkbox value="remember" color="primary" />}
             label="Remember me"

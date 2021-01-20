@@ -71,7 +71,23 @@ const initialValues = {
   companyname: '',
   password: '',
   cpassword: ''
-}
+};
+
+//error messages
+const errors = {
+  firstName: '',
+  lastName: '',
+  email: '',
+  username: '',
+  companyname: '',
+  password: '',
+  cpassword: ''
+};
+
+//email regexp
+const validEmailRegex = 
+  RegExp(/^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i);
+
 
 export default function SignUpMaterial() {
   const classes = useStyles();
@@ -82,9 +98,18 @@ export default function SignUpMaterial() {
     setValues({
       ...values,
       [name]:value
-    })
-    console.log('State: ', name, value)
+    });
   };
+
+  const validateForm = (errors) => {
+    let valid = true;
+
+    Object.values(errors).forEach(
+      // if we have an error string set valid to false
+      (val) => val.length > 0 && (valid = false)
+    );
+    return valid;
+  }  
 
   const submit = event =>{
     event.preventDefault();
@@ -113,12 +138,13 @@ export default function SignUpMaterial() {
         console.log('Internal Server Error');
       });
     }
-    else if(values.cpassword != values.password){
+    else /*(values.cpassword != values.password)*/{
       //error message
-      console.log('passwords do not match!');
+      errors.password  = 'passwords do not match!';
     }
 };
 
+//for password visibilityOn/Off
   const usePasswordToggle = () => {
     const [visible, setVisibility] = useState(false);
 
@@ -133,9 +159,10 @@ export default function SignUpMaterial() {
 
     return [InputType, Icon];
 
-};
+  };
 
   const [PasswordInputType, ToggleIcon] = usePasswordToggle();
+  const [ConfirmPasswordInputType, ConfirmPasswordToggleIcon] = usePasswordToggle();
 
   return (
 
@@ -216,6 +243,7 @@ export default function SignUpMaterial() {
               />
             </Grid>
             <Grid item xs={12}>
+              
               <TextField
                 variant="outlined"
                 required
@@ -223,14 +251,17 @@ export default function SignUpMaterial() {
                 name="password"
                 value={values.password}
                 label="Password"
-                type="password"
+                type={PasswordInputType}
                 id="password"
                 autoComplete="current-password"
                 onChange={handleInputChange}
-              /> 
+              />
               <span className="password-toggle-icon">
                 {ToggleIcon}
               </span>
+              
+              {errors.password.length > 0 && 
+              <span className='error'>{errors.password}</span>}
             </Grid>
             <Grid item xs={12}>
               <TextField
@@ -240,11 +271,14 @@ export default function SignUpMaterial() {
                 name="cpassword"
                 value={values.cpassword}
                 label="Confirm Password"
-                type="password"
+                type={ConfirmPasswordInputType}
                 id="cpassword"
                 autoComplete="cpassword"
                 onChange={handleInputChange}
               />
+               <span className="password-toggle-icon">
+                {ConfirmPasswordToggleIcon}
+              </span>
             </Grid>
            {/* <Grid item xs={12}>
               <FormControlLabel
