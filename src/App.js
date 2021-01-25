@@ -19,6 +19,7 @@ function App() {
         <Route exact path='/footage' render={() => <SavedFootage />} />
         <Route exact path='/signup' render={() => <SignUp />} />
         <Route exact path='/dashboard' render={() => <Dashboard />} />
+        
       </Switch>
 
     </div>
@@ -26,3 +27,4 @@ function App() {
 }
 
 export default withRouter(App);
+//<Route exact path='/account/:id' render={(props) => (<Useraccount id={props.match.params.id} />)} />

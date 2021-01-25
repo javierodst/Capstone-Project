@@ -1,6 +1,7 @@
 /*needed or else space above header*/
 html, *, body { margin: 0px; padding: 0px; }
 
+
   #logo{
     letter-spacing: 2px;
     font-size: 20px;
@@ -34,12 +35,12 @@ html, *, body { margin: 0px; padding: 0px; }
     top: 8px;
   }
 
-  .Header .top .topText {
+  /*.Header .top .topText {
     float: right;
     color: white;
     margin-right: 70px;
     margin-top: 10px;
-  }
+  }*/
   
   .Header .bottom {
     background-color: white;

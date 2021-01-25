@@ -1,7 +1,8 @@
 import React from 'react';
 import AccessTimeIcon from '@material-ui/icons/AccessTime';
-import { Button, withTheme } from '@material-ui/core';
+import {Button} from '@material-ui/core';
 import './Header.css';
+import { Link } from 'react-router-dom';
 
 // We can use inline-style to overide styles from material UI
 const buttonStyle = {  //to change sign in button color and text
@@ -9,13 +10,16 @@ const buttonStyle = {  //to change sign in button color and text
     color: 'rgb(13, 45, 62)',
     position: 'relative',
     right: '20px',
-    padding: '15px 25px',
     textalign: 'center',
     cursor: 'pointer',
     outline: 'none',
     border: 'none',
     borderradius: '15px',
-    boxshadow: '0 9px #999'
+    boxshadow: '0 9px #999',
+    fontWeight: 'bold',
+    float: 'right', //CAUSES DISABLED BUTTON
+    marginRight: '70px',
+    marginTop: '10px'
 };
 
 
@@ -29,11 +33,7 @@ class Header extends React.Component {
         return(
             <div class= "Header">
                 <div class = "top">
-                <span class= "topText">
-                <a href="/signin">
-                <Button variant="contained" size="small" style={buttonStyle}>Sign In</Button>
-                </a>
-                </span>
+                <Button variant="contained" size="small" style={buttonStyle} component={Link} to="/signin">SIGN IN</Button>                               
                 <span class = "hours">
                 <p><AccessTimeIcon size="small" style={clockStyle}/>     MON-FRI: 6:00 AM - 10:00 PM          SAT & SUN: CLOSED</p>
                 </span>

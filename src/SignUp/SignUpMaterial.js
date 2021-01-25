@@ -15,6 +15,8 @@ import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import axios from 'axios';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { red } from '@material-ui/core/colors';
+import { Redirect} from 'react-router-dom';
 
 // We can use inline-style to overide styles
 const buttonStyle = {  //to change signin button color
@@ -70,49 +72,114 @@ const initialValues = {
   username: '',
   companyname: '',
   password: '',
-  cpassword: ''
+  cpassword: '',
+  //error messages
+    errors: {
+      firstName: '',
+      lastName: '',
+      email: '',
+      username: '',
+      companyname: '',
+      password: '',
+      cpassword: ''
+  }
 };
 
-//error messages
-const errors = {
-  firstName: '',
-  lastName: '',
-  email: '',
-  username: '',
-  companyname: '',
-  password: '',
-  cpassword: ''
-};
+const formValid = (errors) => {
+  let valid = true;
+
+  Object.values(errors).forEach(
+    val => { val.length > 0 && (valid = false);
+    //if we have an error string set valid to false
+    });
+
+  return valid;
+}  
 
 //email regexp
 const validEmailRegex = 
   RegExp(/^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i);
 
+const passwordRequirements = 
+  RegExp("^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})");
 
 export default function SignUpMaterial() {
+
+  //deconstructing objects
   const classes = useStyles();
   const [values, setValues] = useState(initialValues);
 
   const handleInputChange = event =>{
+    event.preventDefault();
     const {name, value} = event.target
     setValues({
       ...values,
       [name]:value
     });
+
+    /*console.log("Name: ", name);
+    console.log("Value: ", value);*/
+
+    switch (name) {
+      case "firstName":
+        values.errors.firstName = 
+        value.length < 2  
+        ? "minimum 2 characters required"
+        : "";
+      break;
+      case "lastName":
+        values.errors.lastName = 
+        value.length < 3 
+        ? "minimum 3 characters required"
+        : "";
+      break;
+      case "email":
+        values.errors.email = 
+        validEmailRegex.test(value) 
+        ? ""
+        : "invalid email address";
+      break;
+      case "username":
+        values.errors.username = 
+        value.length < 3 
+        ? "minimum 3 characters required"
+        : "";
+      break;
+      case "companyname":
+        values.errors.companyname = 
+        value.length < 2  
+        ? "minimum 2 characters required"
+        : "";
+      break;
+      case "password":
+        values.errors.password = 
+        passwordRequirements.test(value) 
+        ? ""
+        : "Password must contain at least 1 lowercase character, 1 uppercase character, 1 number, 1 special character, and be at least eight characters long";
+      break;  
+      case "cpassword":
+        values.errors.cpassword = 
+        (value == values.password)
+        ? ""
+        : "passwords do not match";
+      break;
+      default:
+      break;
+    }
+
+    console.log(values);
+
+    //update our state of our formerrors object, dynamically reset name and values as user inputs
+    /*setValues({
+      formErrors,
+      [name]:value
+    }, () => console.log(values)); */
+    //add a callback to do something after the state updates, example console sate
+
   };
 
-  const validateForm = (errors) => {
-    let valid = true;
-
-    Object.values(errors).forEach(
-      // if we have an error string set valid to false
-      (val) => val.length > 0 && (valid = false)
-    );
-    return valid;
-  }  
-
   const submit = event =>{
-    event.preventDefault();
+    event.preventDefault(); //stops form from submitting by itself
         //payload is the data that you are sending
           const payload = {
             firstName: values.firstName,
@@ -123,7 +190,8 @@ export default function SignUpMaterial() {
             cpassword: values.cpassword
         };
     
-    if(values.cpassword == values.password){  //only creates user account if passwords match
+    //only creates user account if passwords match and form is valid
+    if( formValid(values.errors)){  
 
       //make http call, default uses get
       axios({
@@ -138,9 +206,9 @@ export default function SignUpMaterial() {
         console.log('Internal Server Error');
       });
     }
-    else /*(values.cpassword != values.password)*/{
-      //error message
-      errors.password  = 'passwords do not match!';
+    else {
+      //error message, can add a fancy css pop up
+     console.error("FORM INVALID --");
     }
 };
 
@@ -190,6 +258,9 @@ export default function SignUpMaterial() {
                 autoFocus
                 onChange={handleInputChange}
               />
+              {values.errors.firstName.length > 0 && (
+                <span className="errormsg">{values.errors.firstName}</span>
+              )}
             </Grid>
             <Grid item xs={12} sm={6}>
               <TextField
@@ -203,6 +274,9 @@ export default function SignUpMaterial() {
                 autoComplete="lname"
                 onChange={handleInputChange}
               />
+              {values.errors.lastName.length > 0 && (
+                <span className="errormsg">{values.errors.lastName}</span>
+              )}
             </Grid>
             <Grid item xs={12}>
               <TextField
@@ -216,6 +290,9 @@ export default function SignUpMaterial() {
                 autoComplete="email"
                 onChange={handleInputChange}
               />
+              {values.errors.email.length > 0 && (
+                <span className="errormsg">{values.errors.email}</span>
+              )}
             </Grid>
             <Grid item xs={12} sm={6}>
               <TextField
@@ -229,6 +306,9 @@ export default function SignUpMaterial() {
                 autoComplete="uname"
                 onChange={handleInputChange}
               />
+              {values.errors.username.length > 0 && (
+                <span className="errormsg">{values.errors.username}</span>
+              )}
             </Grid>
             <Grid item xs={12} sm={6}>
               <TextField
@@ -241,6 +321,9 @@ export default function SignUpMaterial() {
                 autoComplete="cname"
                 onChange={handleInputChange}
               />
+              {values.errors.companyname.length > 0 && (
+                <span className="errormsg">{values.errors.companyname}</span>
+              )}
             </Grid>
             <Grid item xs={12}>
               
@@ -259,9 +342,11 @@ export default function SignUpMaterial() {
               <span className="password-toggle-icon">
                 {ToggleIcon}
               </span>
-              
-              {errors.password.length > 0 && 
-              <span className='error'>{errors.password}</span>}
+             
+              {values.errors.password.length > 0 && (
+                <span className="errormsg">{values.errors.password}</span>
+              )}
+
             </Grid>
             <Grid item xs={12}>
               <TextField
@@ -276,9 +361,14 @@ export default function SignUpMaterial() {
                 autoComplete="cpassword"
                 onChange={handleInputChange}
               />
-               <span className="password-toggle-icon">
+              <span className="password-toggle-icon">
                 {ConfirmPasswordToggleIcon}
               </span>
+
+              {values.errors.cpassword.length > 0 && (
+                <span className="errormsg">{values.errors.cpassword}</span>
+              )}
+
             </Grid>
            {/* <Grid item xs={12}>
               <FormControlLabel

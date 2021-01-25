@@ -1,8 +1,18 @@
 .password-toggle-icon{
-    position:relative;
-    bottom: 37px;
-    left: 365px;
+    position: relative;
+   bottom: 37px;
+    left: 364px;   
     z-index: 1000;
     cursor: pointer;
-    color: #adadad;
+    color: #adadad; 
+}
+.errormsg {
+    display:inline-block;
+    color: #FF0033;
+    font-size: 12px;
+   margin-top: -15px;
+}
+
+.error {
+    border-color: #FF0033;
 }

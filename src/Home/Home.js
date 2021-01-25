@@ -2,15 +2,15 @@ import React from 'react';
 import { withRouter } from 'react-router-dom';
 import './Home.css';
 import Header from '../Header/Header.js';
+import Slider from './Slider.js';
 
 class Home extends React.Component {
 
     render() {
         return (
             <div>
-                 <Header />
-                 <img src="/Images/banner.jpg" alt="banner" class="banner"></img>
-                
+            <Header />
+            <Slider />
             </div>
         );
     }

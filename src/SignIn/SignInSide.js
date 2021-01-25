@@ -15,6 +15,7 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import axios from 'axios';
   
 // We can use inline-style to overide styles
 const buttonStyle = {  //to change signin button color
@@ -35,7 +36,7 @@ function Copyright() {
     <Typography variant="body2" color="textSecondary" align="center">
       {'Copyright © '}
       <Link color="inherit" href="https://material-ui.com/">
-        Your Website
+        SeCUrenity
       </Link>{' '}
       {new Date().getFullYear()}
       {'.'}
@@ -63,8 +64,93 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+//properties with default values
+const initialValues = {
+  email: '',
+  password: '',
+  //error messages
+    errors: {
+      email: ''
+  }
+};
+
+const formValid = (errors) => {
+  let valid = true;
+
+  Object.values(errors).forEach(
+    val => { val.length > 0 && (valid = false);
+    //if we have an error string set valid to false
+    });
+
+  return valid;
+}  
+
+//email regexp
+const validEmailRegex = 
+  RegExp(/^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i);
+
+
 export default function SignInSide() {
+
+  //deconstructing objects
   const classes = useStyles();
+  const [values, setValues] = useState(initialValues);
+
+  const handleInputChange = event =>{
+    event.preventDefault();
+    const {name, value} = event.target
+    setValues({
+      ...values,
+      [name]:value
+    });
+
+    /*console.log("Name: ", name);
+    console.log("Value: ", value);*/
+
+    switch (name) {
+      case "email":
+        values.errors.email = 
+        validEmailRegex.test(value) 
+        ? ""
+        : "invalid email address";
+      break;  
+      default:
+      break;
+    }
+
+    console.log(values);
+
+  };
+
+  const submit = event =>{
+    event.preventDefault(); //stops form from submitting by itself
+        //payload is the data that you are sending
+          const payload = {
+            email: values.email,
+            password: values.password
+        };
+    
+    //only creates user account if passwords match and form is valid
+    if( formValid(values.errors)){  
+
+      //make http call, default uses get
+      axios({
+        url: 'http://localhost:8080/api/login',
+        method: 'POST',
+        data: payload
+      })
+      .then(()=> {
+        console.log('Data has been sent to the server');
+      })
+      .catch(()=> {
+        console.log('Internal Server Error');
+      });
+    }
+    else {
+      //error message, can add a fancy css pop up
+     console.error("FORM INVALID --");
+    }
+};
 
 //for password visibilityOn/Off
 const usePasswordToggle = () => {
@@ -95,10 +181,11 @@ const [PasswordInputType, ToggleIcon] = usePasswordToggle();
         <Typography component="h1" variant="h5">
           Sign in
         </Typography>
-        <form className={classes.form} noValidate>
+        <form onSubmit={submit} className={classes.form} noValidate>
           <TextField
             variant="outlined"
             margin="normal"
+            value={values.email}
             required
             fullWidth
             id="email"
@@ -106,10 +193,15 @@ const [PasswordInputType, ToggleIcon] = usePasswordToggle();
             name="email"
             autoComplete="email"
             autoFocus
+            onChange={handleInputChange}
           />
+          {values.errors.email.length > 0 && (
+            <span className="errormsg">{values.errors.email}</span>
+          )}
           <TextField
             variant="outlined"
             margin="normal"
+            value={values.password}
             required
             fullWidth
             name="password"
@@ -117,10 +209,12 @@ const [PasswordInputType, ToggleIcon] = usePasswordToggle();
             type={PasswordInputType}
             id="password"
             autoComplete="current-password"
+            onChange={handleInputChange}
           />
-            <span className="password-icon">
-                {ToggleIcon}
-              </span>
+          <span className="password-toggle-icon">
+            {ToggleIcon}
+          </span>
+          
           <FormControlLabel
             control={<Checkbox value="remember" color="primary" />}
             label="Remember me"
