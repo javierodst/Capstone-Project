@@ -7,6 +7,9 @@ import SignUp from './SignUp/SignUp.js';
 import StreamPage from './StreamPage/StreamPage.js';
 import SavedFootage from './SavedFootage/SavedFootage.js';
 import Dashboard from './Dashboard/Dashboard.js';
+import About from './Aboutpage/About.js';
+import Contact from './Contactpage/Contact.js';
+import Services from './Servicespage/Services.js';
 
 function App() {
   return (
@@ -19,7 +22,10 @@ function App() {
         <Route exact path='/footage' render={() => <SavedFootage />} />
         <Route exact path='/signup' render={() => <SignUp />} />
         <Route exact path='/dashboard' render={() => <Dashboard />} />
-        
+        <Route exact path='/about' render={() => <About />} />
+        <Route exact path='/contact' render={() => <Contact />} />
+        <Route exact path='/services' render={() => <Services />} />
+
       </Switch>
 
     </div>
@@ -27,4 +33,4 @@ function App() {
 }
 
 export default withRouter(App);
-//<Route exact path='/account/:id' render={(props) => (<Useraccount id={props.match.params.id} />)} />
+//<Route exact path='/dashboard/:id' render={(props) => (<Dashboard id={props.match.params.id} />)} />

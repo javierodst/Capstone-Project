@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
+import {withRouter} from 'react-router-dom';
 import './SignUpMaterial.css';
+import history from '../history';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -14,8 +16,10 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import axios from 'axios';
+import { AxiosResponse, AxiosError } from 'axios'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { red } from '@material-ui/core/colors';
+import { render } from 'react-dom';
 import { Redirect} from 'react-router-dom';
 
 // We can use inline-style to overide styles
@@ -28,7 +32,7 @@ const textStyle = { //to change signin text color
 };
 
 const iconStyle = { //to change signin icon color
-    background: '#3e0d14',
+    background: '#823038',
 };
 
 function Copyright() {
@@ -85,6 +89,7 @@ const initialValues = {
   }
 };
 
+
 const formValid = (errors) => {
   let valid = true;
 
@@ -103,12 +108,15 @@ const validEmailRegex =
 const passwordRequirements = 
   RegExp("^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})");
 
-export default function SignUpMaterial() {
+//let isSignedUp = false;
+
+export default function SignUpMaterial(props) {
 
   //deconstructing objects
   const classes = useStyles();
   const [values, setValues] = useState(initialValues);
 
+  //callback whenever state
   const handleInputChange = event =>{
     event.preventDefault();
     const {name, value} = event.target
@@ -117,6 +125,7 @@ export default function SignUpMaterial() {
       [name]:value
     });
 
+   
     /*console.log("Name: ", name);
     console.log("Value: ", value);*/
 
@@ -191,19 +200,23 @@ export default function SignUpMaterial() {
         };
     
     //only creates user account if passwords match and form is valid
-    if( formValid(values.errors)){  
-
+    if( (formValid(values.errors)) && (payload.firstName != '') && (payload.lastName != '') && (payload.email != '') && (payload.username !='') && (payload.cpassword != '')){  
+      
       //make http call, default uses get
       axios({
         url: 'http://localhost:8080/api/register',
         method: 'POST',
         data: payload
       })
-      .then(()=> {
-        console.log('Data has been sent to the server');
+      .then( res => { 
+        if(res.status === 200){
+          console.log('Data has been sent to the server');
+          history.push("/signin");
+        }
       })
       .catch(()=> {
         console.log('Internal Server Error');
+        
       });
     }
     else {
@@ -377,7 +390,7 @@ export default function SignUpMaterial() {
               />
             </Grid>*/}
           </Grid>
-          <Button onClick={() => ('/signin')}
+          <Button /*onClick= {setRedirect}*/
             type="submit"
             fullWidth
             variant="contained"

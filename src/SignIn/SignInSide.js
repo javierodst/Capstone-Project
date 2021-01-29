@@ -13,10 +13,13 @@ import Box from '@material-ui/core/Box';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
+import {withStyles} from "@material-ui/core/styles";
 import Container from '@material-ui/core/Container';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import axios from 'axios';
-  
+import history from '../history';
+import { red } from '@material-ui/core/colors';
+
 // We can use inline-style to overide styles
 const buttonStyle = {  //to change signin button color
     background: 'rgb(13, 45, 62)',
@@ -27,9 +30,12 @@ const textStyle = { //to change signin text color
 };
 
 const iconStyle = { //to change signin icon color
-    background: '#3e0d14',
+    background: '#823038',/*#753742 *//**#AA5042 */
 };
 
+const eyeStyle = {
+  top: '-52px', //different position then signup page icon
+};
 
 function Copyright() {
   return (
@@ -131,7 +137,7 @@ export default function SignInSide() {
         };
     
     //only creates user account if passwords match and form is valid
-    if( formValid(values.errors)){  
+    if( formValid(values.errors) && (payload.email != '') && (payload.password != '')){  
 
       //make http call, default uses get
       axios({
@@ -139,8 +145,13 @@ export default function SignInSide() {
         method: 'POST',
         data: payload
       })
-      .then(()=> {
+      .then/*(()=> {
         console.log('Data has been sent to the server');
+      })*/( res => { 
+        if(res.status === 200){
+          console.log('Data has been sent to the server');
+          history.push("/dashboard");
+        }
       })
       .catch(()=> {
         console.log('Internal Server Error');
@@ -153,7 +164,7 @@ export default function SignInSide() {
 };
 
 //for password visibilityOn/Off
-const usePasswordToggle = () => {
+const usePasswordToggle2 = () => {
   const [visible, setVisibility] = useState(false);
 
   const Icon = (
@@ -169,7 +180,7 @@ const usePasswordToggle = () => {
 
 };
 
-const [PasswordInputType, ToggleIcon] = usePasswordToggle();
+const [PasswordInputType, ToggleIcon2] = usePasswordToggle2();
 
   return (
     <Container component="main" maxWidth="xs">
@@ -211,8 +222,8 @@ const [PasswordInputType, ToggleIcon] = usePasswordToggle();
             autoComplete="current-password"
             onChange={handleInputChange}
           />
-          <span className="password-toggle-icon">
-            {ToggleIcon}
+          <span className="password-toggle-icon" style={eyeStyle}>
+            {ToggleIcon2}
           </span>
           
           <FormControlLabel

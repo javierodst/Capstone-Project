@@ -7,14 +7,15 @@ import { BrowserRouter } from 'react-router-dom';
 //adding font awesome icons by building a library
 import { library } from "@fortawesome/fontawesome-svg-core";
 import {faEye, faEyeSlash} from "@fortawesome/free-solid-svg-icons";
-
+import history from './history'
+import {Router} from 'react-router-dom'
 
 library.add(faEye, faEyeSlash);
 
 ReactDOM.render(
-  <BrowserRouter foo="bar">
+  <Router history={history} foo="bar">
     <App />
-  </BrowserRouter>,
+  </Router>,
   document.getElementById('root')
 );
 

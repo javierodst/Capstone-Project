@@ -3,13 +3,35 @@
     height: auto;
 }
 
-.text {
-  position: absolute;
+/*.line1 {
+  position: relative;
   /*top: 85%;
   left: 50%;*/
-  font-size: 48px;
+  /*font-size: 48px;
   color: rgb(13, 45, 62);
   float: left;
   bottom: 200px;
+  
+}
+.line2 {
+  position: relative;
+  display:block;
+  /*top: 85%;
+  left: 50%;*/
+  /*font-size: 48px;
+  color: rgb(13, 45, 62);
+ 
+  bottom: 200px;
   margin-left: 150px;
 }
+  .line3 {}*/
+
+  .text{
+    margin-left: 170px;
+    margin-bottom:18px;
+    color: rgb(13, 45, 62);
+    font-size: 64px;
+    position:relative;
+    bottom:430px;
+  
+  }

@@ -4,13 +4,17 @@ import './Home.css';
 import Header from '../Header/Header.js';
 import Slider from './Slider.js';
 
+
 class Home extends React.Component {
 
     render() {
         return (
             <div>
             <Header />
-            <Slider />
+            <img src="/Images/porch.jpg" alt="banner" class="banner"></img>
+            <p class="text">We Are Here</p>
+            <p class="text">For Your Peace</p>
+            <p class="text">Of Mind</p>
             </div>
         );
     }

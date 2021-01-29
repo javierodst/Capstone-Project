@@ -1,13 +1,12 @@
 .password-toggle-icon{
     position:absolute;
-    top: -40px;
+    top: -37px;
     left: 365px;
     z-index: 1000;
     cursor: pointer;
     color: #adadad;
 }
    
-
 .errormsg {
     display:block;
     color: #FF0033;
