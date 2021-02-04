@@ -10,6 +10,7 @@ import Dashboard from './Dashboard/Dashboard.js';
 import About from './Aboutpage/About.js';
 import Contact from './Contactpage/Contact.js';
 import Services from './Servicespage/Services.js';
+import ForgotPassword from './ForgotPassword/ForgotPassword.js';
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
         <Route exact path='/about' render={() => <About />} />
         <Route exact path='/contact' render={() => <Contact />} />
         <Route exact path='/services' render={() => <Services />} />
+        <Route exact path='/forgotpassword' render={() => <ForgotPassword />} />
 
       </Switch>
 

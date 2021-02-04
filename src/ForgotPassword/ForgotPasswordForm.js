@@ -1,6 +1,5 @@
 /*Using Material-UI -> React UI framework */
 import React, { useState, useEffect } from 'react';
-import './SignIn.css';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -18,7 +17,7 @@ import Container from '@material-ui/core/Container';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import axios from 'axios';
 import history from '../history';
-import { red } from '@material-ui/core/colors';
+
 
 // We can use inline-style to overide styles
 const buttonStyle = {  //to change signin button color
@@ -68,12 +67,21 @@ const useStyles = makeStyles((theme) => ({
   submit: {
     margin: theme.spacing(3, 0, 2),
   },
+  instructions: {
+    textAlign: 'center',
+    fontSize: '14px',
+    marginTop: '15px',
+  },
+  dontWorry: {
+    textAlign: 'center',
+    fontSize: '16px',
+    marginTop: '15px',
+  }
 }));
 
 //properties with default values
 const initialValues = {
   email: '',
-  password: '',
   //error messages
     errors: {
       email: ''
@@ -96,7 +104,7 @@ const validEmailRegex =
   RegExp(/^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i);
 
 
-export default function SignInSide() {
+export default function ForgotPasswordForm() {
 
   //deconstructing objects
   const classes = useStyles();
@@ -132,16 +140,15 @@ export default function SignInSide() {
     event.preventDefault(); //stops form from submitting by itself
         //payload is the data that you are sending
           const payload = {
-            email: values.email,
-            password: values.password
+            email: values.email
         };
     
     //only creates user account if passwords match and form is valid
-    if( formValid(values.errors) && (payload.email != '') && (payload.password != '')){  
+    if( formValid(values.errors) && (payload.email != '')){  
 
       //make http call, default uses get
       axios({
-        url: 'http://localhost:8080/api/login',
+        url: 'http://localhost:8080/api/forgotpassword',
         method: 'POST',
         data: payload
       })
@@ -150,7 +157,7 @@ export default function SignInSide() {
       })*/( res => { 
         if(res.status === 200){
           console.log('Data has been sent to the server');
-          history.push("/dashboard");
+          history.push("/signin");
         }
       })
       .catch(()=> {
@@ -163,25 +170,6 @@ export default function SignInSide() {
     }
 };
 
-//for password visibilityOn/Off
-const usePasswordToggle2 = () => {
-  const [visible, setVisibility] = useState(false);
-
-  const Icon = (
-  <FontAwesomeIcon
-      icon = {visible ? "eye-slash" : "eye" }
-      onClick={() => setVisibility(visibility => !visibility)}
-  />
-  )
-
-  const InputType = visible ? "Text" : "Password";
-
-  return [InputType, Icon];
-
-};
-
-const [PasswordInputType, ToggleIcon2] = usePasswordToggle2();
-
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
@@ -190,7 +178,13 @@ const [PasswordInputType, ToggleIcon2] = usePasswordToggle2();
           <LockOutlinedIcon />
         </Avatar>
         <Typography component="h1" variant="h5">
-          Sign in
+          Forgot your password?
+        </Typography>
+        <Typography className={classes.dontWorry}>
+          Don't worry! We all forget things.
+        </Typography>
+        <Typography className={classes.instructions}>
+          Enter your email address associated with your account and we will send you a link to reset your password.
         </Typography>
         <form onSubmit={submit} className={classes.form} noValidate>
           <TextField
@@ -209,27 +203,6 @@ const [PasswordInputType, ToggleIcon2] = usePasswordToggle2();
           {values.errors.email.length > 0 && (
             <span className="errormsg">{values.errors.email}</span>
           )}
-          <TextField
-            variant="outlined"
-            margin="normal"
-            value={values.password}
-            required
-            fullWidth
-            name="password"
-            label="Password"
-            type={PasswordInputType}
-            id="password"
-            autoComplete="current-password"
-            onChange={handleInputChange}
-          />
-          <span className="password-toggle-icon" style={eyeStyle}>
-            {ToggleIcon2}
-          </span>
-          
-          <FormControlLabel
-            control={<Checkbox value="remember" color="primary" />}
-            label="Remember me"
-          />
           <Button 
             type="submit"
             fullWidth
@@ -238,20 +211,8 @@ const [PasswordInputType, ToggleIcon2] = usePasswordToggle2();
             className={classes.submit}
             style={buttonStyle}
           >
-            Sign In
+            Reset Password
           </Button>
-          <Grid container>
-            <Grid item xs>
-              <Link href="/forgotpassword" variant="body2" style={textStyle}>
-                Forgot your password?
-              </Link>
-            </Grid>
-            <Grid item>
-              <Link href="/signup" variant="body2" style={textStyle}>
-                {"Don't have an account? Sign Up"}
-              </Link>
-            </Grid>
-          </Grid>
         </form>
       </div>
       <Box mt={8}>

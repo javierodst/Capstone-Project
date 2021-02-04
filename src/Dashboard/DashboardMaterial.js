@@ -10,6 +10,9 @@ import List from '@material-ui/core/List';
 import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
+import {Button} from '@material-ui/core';
+import {withStyles} from "@material-ui/core/styles";
+import history from '../history';
 import Badge from '@material-ui/core/Badge';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
@@ -23,6 +26,12 @@ import { mainListItems, secondaryListItems } from './listItems';
 import Deposits from './Deposits';
 import Orders from './Orders';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
+import ReactDOM from 'react-dom';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
 
 // We can use inline-style to overide styles
 const headerStyle = {  //to change signin button color
@@ -121,16 +130,60 @@ const useStyles = makeStyles((theme) => ({
   fixedHeight: {
     height: 240,
   },
+  signOut: {
+    display: 'block',
+    position: 'relative',
+   // right: '20px',
+    textalign: 'center',
+    cursor: 'pointer',
+    outline: 'none',
+    border: 'none',
+    borderradius: '15px',
+    boxshadow: '0 9px #999',
+    fontWeight: 'bold',
+    float: 'right', //CAUSES DISABLED BUTTON
+    //marginRight: '70px',
+    //marginTop: '10px',  
+    backgroundColor: "white",
+    color: "rgb(13, 45, 62);",
+    "&:hover": {
+        backgroundColor: "#823038",
+        color: "white",
+      },
+      position: "relative",
+  },
+  userIcon: {
+    //backgroundColor: "white",
+    color: "white",
+    "&:hover": {
+      //  backgroundColor: "#823038",
+        color: "#823038",
+      },
+      position: "relative",
+  },
 }));
+
+
 
 export default function DashboardMaterial() {
   const classes = useStyles();
   const [open, setOpen] = React.useState(true);
+  const [openAlert, setOpenAlert] = React.useState(false);
   const handleDrawerOpen = () => {
     setOpen(true);
   };
   const handleDrawerClose = () => {
     setOpen(false);
+  };
+  const handleClickOpen = () => {
+    setOpenAlert(true);
+  };
+  const handleClose = () => {
+    setOpenAlert(false);
+  };
+  const SignOut = () => {
+    setOpenAlert(false);
+    history.push("/signin");
   };
   const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
 
@@ -151,11 +204,14 @@ export default function DashboardMaterial() {
           <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title}>
             Dashboard
           </Typography>
-          <IconButton>
+          <IconButton size="large">
             <Badge /*badgeContent={4} color="secondary"*/ >
-              <AccountCircleIcon />
+              <AccountCircleIcon fontSize= "medium" className={classes.userIcon}/>
             </Badge>
           </IconButton>
+          <Button onClick={handleClickOpen} variant="contained" size="small" className={classes.signOut}>
+          Sign Out
+        </Button>
         </Toolbar>
       </AppBar>
       <Drawer
@@ -175,6 +231,29 @@ export default function DashboardMaterial() {
         <Divider />
         <List>{secondaryListItems}</List>
       </Drawer>
+      {/*signout alert*/}
+      <Dialog
+        open={openAlert}
+        onClose={handleClose}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle id="alert-dialog-title">{"Are you sure you would like to sign out?"}</DialogTitle>
+        {/*<DialogContent>
+          <DialogContentText id="alert-dialog-description">
+            Let Google help apps determine location. This means sending anonymous location data to
+            Google, even when no apps are running.
+          </DialogContentText>
+        </DialogContent>*/}
+        <DialogActions>
+          <Button onClick={SignOut} color="primary">
+            Yes
+          </Button>
+          <Button onClick={handleClose} color="primary" autoFocus>
+            No
+          </Button>
+        </DialogActions>
+      </Dialog>
       <main className={classes.content}>
         <div className={classes.appBarSpacer} />
         <Container maxWidth="lg" className={classes.container}>
