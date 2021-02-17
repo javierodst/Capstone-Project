@@ -1,0 +1,7 @@
+
+.videoPage{
+    position: relative;
+    display:grid;
+    width: 90%;
+    padding: 2em;
+}
