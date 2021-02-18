@@ -73,7 +73,7 @@ const useStyles = makeStyles((theme) => ({
 //properties with default values
 const initialValues = {
   email: '',
-  password: '',
+  cpassword: '',
   //error messages
     errors: {
       email: ''
@@ -128,16 +128,18 @@ export default function SignInSide() {
 
   };
 
+  axios.defaults.withCredentials = true;
+
   const submit = event =>{
     event.preventDefault(); //stops form from submitting by itself
         //payload is the data that you are sending
           const payload = {
             email: values.email,
-            password: values.password
+            cpassword: values.cpassword
         };
     
     //only creates user account if passwords match and form is valid
-    if( formValid(values.errors) && (payload.email != '') && (payload.password != '')){  
+    if( formValid(values.errors) && (payload.email != '') && (payload.cpassword != '')){  
 
       //make http call, default uses get
       axios({
@@ -150,6 +152,18 @@ export default function SignInSide() {
       })*/( res => { 
         if(res.status === 200){
           console.log('Data has been sent to the server');
+          const sessionfname = res.data.user.firstName;
+          const sessionlname = res.data.user.lastName;
+          const sessionemail = res.data.user.email;
+          const sessionuname = res.data.user.username;
+          const sessioncname = res.data.user.companyname;
+
+          localStorage.setItem('sessionfname', sessionfname);
+          localStorage.setItem('sessionlname', sessionlname);
+          localStorage.setItem('sessionemail', sessionemail);
+          localStorage.setItem('sessionuname', sessionuname);
+          localStorage.setItem('sessioncname', sessioncname);
+
           history.push("/dashboard");
         }
       })
@@ -162,6 +176,13 @@ export default function SignInSide() {
      console.error("FORM INVALID --");
     }
 };
+
+//if refresh the page user stays logged in
+useEffect(()=> {
+  axios.get("http://localhost:8080/api/login").then((response) =>{
+    console.log(response);
+  })
+}, [])
 
 //for password visibilityOn/Off
 const usePasswordToggle2 = () => {
@@ -212,13 +233,13 @@ const [PasswordInputType, ToggleIcon2] = usePasswordToggle2();
           <TextField
             variant="outlined"
             margin="normal"
-            value={values.password}
+            value={values.cpassword}
             required
             fullWidth
-            name="password"
+            name="cpassword"
             label="Password"
             type={PasswordInputType}
-            id="password"
+            id="cpassword"
             autoComplete="current-password"
             onChange={handleInputChange}
           />

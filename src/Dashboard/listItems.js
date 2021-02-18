@@ -15,12 +15,14 @@ import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 
 export const mainListItems = (
   <div>
+    <a href="/dashboard">
     <ListItem button>
       <ListItemIcon>
         <DashboardIcon />
       </ListItemIcon>
       <ListItemText primary="Dashboard" />
     </ListItem>
+    </a>
     
     <a href="/stream">
     <ListItem button>
@@ -31,36 +33,39 @@ export const mainListItems = (
     </ListItem>
     </a>
 
+    <a href="/account">
     <ListItem button>
       <ListItemIcon>
         <AccountCircleIcon />
       </ListItemIcon>
       <ListItemText primary="Account" />
     </ListItem>
-    <ListItem button>
-      <ListItemIcon>
-        <SettingsIcon />
-      </ListItemIcon>
-      <ListItemText primary="Settings" />
-    </ListItem>
+    </a>
   </div>
 );
 
 export const secondaryListItems = (
   <div>
     <ListSubheader inset>Saved Footage</ListSubheader>
+
+    <a href="/currentweek">
     <ListItem button>
       <ListItemIcon>
         <VideoLibraryIcon />
       </ListItemIcon>
-      <ListItemText primary="Current week" />
+      <ListItemText primary="Current Week" />
     </ListItem>
+    </a>
+
+    <a href="/lastweek">
     <ListItem button>
       <ListItemIcon>
         <VideoLibraryIcon />
       </ListItemIcon>
-      <ListItemText primary="Last Month" />
+      <ListItemText primary="Last Week" />
     </ListItem>
+    </a>
+    
     <a href="/footage">
     <ListItem button>
       <ListItemIcon>

@@ -184,7 +184,7 @@ export default function ForgotPasswordForm() {
           Don't worry! We all forget things.
         </Typography>
         <Typography className={classes.instructions}>
-          Enter your email address associated with your account and we will send you a link to reset your password.
+          Enter your email address associated with your account and we will send you a temporary password.
         </Typography>
         <form onSubmit={submit} className={classes.form} noValidate>
           <TextField

@@ -24,7 +24,7 @@ import NotificationsIcon from '@material-ui/icons/Notifications';
 import { mainListItems, secondaryListItems } from './listItems';
 //import Chart from './Chart';
 import Deposits from './Deposits';
-import Orders from './Orders';
+//import Orders from './Orders';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import ReactDOM from 'react-dom';
 import Dialog from '@material-ui/core/Dialog';
@@ -165,7 +165,7 @@ const useStyles = makeStyles((theme) => ({
 
 
 
-export default function DashboardMaterial() {
+export default function DashboardMaterial(props, {componentToPassDown}) {
   const classes = useStyles();
   const [open, setOpen] = React.useState(true);
   const [openAlert, setOpenAlert] = React.useState(false);
@@ -202,8 +202,10 @@ export default function DashboardMaterial() {
             <MenuIcon />
           </IconButton>
           <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title}>
-            Dashboard
+           {/* Dashboard*/}
+           {props.name}
           </Typography>
+          <h2>{localStorage.getItem('sessionfname')}</h2>
           <IconButton size="large">
             <Badge /*badgeContent={4} color="secondary"*/ >
               <AccountCircleIcon fontSize= "medium" className={classes.userIcon}/>
@@ -273,7 +275,10 @@ export default function DashboardMaterial() {
             {/* Recent Orders */}
             <Grid item xs={12}>
               <Paper className={classes.paper}>
-                <Orders />
+              <>
+              {props.componentToPassDown}  
+              </>
+                {/*<Orders />*/}
               </Paper>
             </Grid>
           </Grid>
