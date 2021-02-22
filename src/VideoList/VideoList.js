@@ -13,7 +13,7 @@ class VideoList extends React.Component {
 
     }
 
-    url = "http://localhost:8080/api/video/keep/"
+    url = "https://nameless-ravine-22066.herokuapp.com/api/video/keep/"
     componentDidMount() {
 
     }
@@ -72,7 +72,7 @@ class VideoList extends React.Component {
                     return (
                         <div>
                             <p>Video will be kept</p>
-                            <Button onClick={() => this.handleClick(_id, title, date, keep, path)}>UnKeep?</Button>
+                            <Button onClick={() => this.handleClick(_id, title, date, keep, path)}>UnKeep</Button>
                         </div>
 
                     );
@@ -81,27 +81,29 @@ class VideoList extends React.Component {
                     return (
                         <div>
                             <p>Video is not kept</p>
-                            <Button onClick={() => this.handleClick(_id, title, date, keep, path)}>Keep?</Button>
+                            <Button className="btn-keep" onClick={() => this.handleClick(_id, title, date, keep, path)} >Keep</Button>
                         </div>
                     );
                 }
             }
+
             return (
                 <div className="videoPage">
-                    <tr key={_id}>
-                        <td className="title"><strong>{title}</strong></td>
-                        <br />
-                        <td className="video">
-                            <video width="640" height="480" controls>
+                    <div key={_id} className="videos">
+                        <div className="title"><strong>{title}</strong></div>
+                        <div className="video">
+                            <video controls>
                                 <source src={path} type="video/mp4" />
                             </video>
-                        </td>
-                        <br />
-                        <td>{path}</td>
-                        <br />
-                        {kept()}
+                        </div>
 
-                    </tr>
+                        <div className="video-date"><strong>Date: </strong>{date}</div>
+
+                        <div className="keep">
+                            {kept()}
+                        </div>
+
+                    </div>
                 </div>
             )
         });

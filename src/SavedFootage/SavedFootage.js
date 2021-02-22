@@ -9,7 +9,7 @@ class SavedFootage extends React.Component {
 
     state = { videos: [] };
 
-    url = "http://localhost:8080/api/videos";
+    url = "https://nameless-ravine-22066.herokuapp.com/api/videos";
 
     componentDidMount() {
         fetch(this.url)
@@ -54,7 +54,11 @@ class SavedFootage extends React.Component {
                 <Header />
                 <div className="main">
                     <h1>Saved Footage</h1>
-                    <VideoList className="footageVideo" videos={this.state.videos} />
+                    <br />
+                    <div className="list">
+                        <VideoList className="footageVideo" videos={this.state.videos} />
+                    </div>
+
                 </div>
 
 

@@ -1,7 +1,36 @@
 
 .videoPage{
-    position: relative;
-    display:grid;
-    width: 90%;
-    padding: 2em;
+    display: flex;
+    justify-content: space-evenly;
+    
+    padding: 0em 2em;
+    font-size: .8vw;
+}
+
+.videos{
+    
+    padding: 1em;
+    
+    background-color: rgba(207, 207, 207, 0.397);
+
+    border-radius: 7px;
+}
+
+.title{
+
+    background-color: rgb(13, 45, 62);
+    color:white;
+    border-radius: 3px;
+    padding: .4em;
+}
+
+.video video{
+    width: 24vw;
+    height: 30vh;
+  
+}
+
+
+.keep button{
+    background-color: rgb(173, 173, 173);
 }
