@@ -14,6 +14,7 @@ import ForgotPassword from './ForgotPassword/ForgotPassword.js';
 import Account from './Account/Account.js';
 import CurrentWeek from './CurrentWeek/CurrentWeek.js';
 import LastWeek from './LastWeek/LastWeek.js';
+import Footage from './Footage/Footage.js';
 
 
 function App() {
@@ -25,6 +26,7 @@ function App() {
         <Route exact path='/signin' render={() => <SignIn />} />
         <Route exact path='/stream' render={() => <StreamPage />} />
         <Route exact path='/footage' render={() => <SavedFootage />} />
+        <Route exact path='/footage1' render={() => <Footage />} />
         <Route exact path='/signup' render={() => <SignUp />} />
         <Route exact path='/dashboard' render={() => <Dashboard />} />
         <Route exact path='/about' render={() => <About />} />
