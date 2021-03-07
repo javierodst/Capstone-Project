@@ -21,8 +21,6 @@ import Grid from '@material-ui/core/Grid';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import axios from 'axios';
 import { Alert, AlertTitle } from '@material-ui/lab';
-//import Title from './Title';
-
 
 const textStyle = { //to change signin text color
     color: 'rgb(13, 45, 62)',
@@ -110,20 +108,65 @@ export default function AccountInfo() {
   
     };
 
+  //logout alert  
   const [open, setOpen] = React.useState(true);
+  //password alert state
   const [openAlert, setOpenAlert] = React.useState(false);
+  //company alert state
+  const [openCompanyAlert, setCompanyAlert] = React.useState(false);
+  //username alert state
+  const [openUnameAlert, setUnameAlert] = React.useState(false);
+  //email alert state
+  const [openEmailAlert, setEmailAlert] = React.useState(false);
+  //name alert state
+  const [openNameAlert, setNameAlert] = React.useState(false);
+
   const handleDrawerOpen = () => {
     setOpen(true);
   };
   const handleDrawerClose = () => {
     setOpen(false);
   };
+
+  //password edit
   const handlepasswordEdit = () => {
     setOpenAlert(true);
   };
   const handleClose = () => {
     setOpenAlert(false);
   };
+
+  //company edit
+  const handlecompanyEdit = () => {
+    setCompanyAlert(true);
+  };
+  const handleCompanyClose = () => {
+    setCompanyAlert(false);
+  }
+
+  //username edit
+  const handleUnameEdit = () => {
+    setUnameAlert(true);
+  };
+  const handleUnameClose = () => {
+    setUnameAlert(false);
+  }
+
+  //email edit
+const handleEmailEdit = () => {
+    setEmailAlert(true);
+  };
+  const handleEmailClose = () => {
+    setEmailAlert(false);
+  }
+
+  //name edit
+ const handleNameEdit = () => {
+    setNameAlert(true);
+  };
+  const handleNameClose = () => {
+    setNameAlert(false);
+  }
 
   const submit = event =>{
     event.preventDefault(); //stops form from submitting by itself
@@ -197,7 +240,7 @@ export default function AccountInfo() {
           </Avatar>
         </ListItemAvatar>
         <ListItemText primary="Name" secondary={sessionuser} />
-        <Button color="primary" align="right">
+        <Button onClick={handleNameEdit} color="primary" align="right">
             Edit
         </Button>
       </ListItem>
@@ -208,7 +251,7 @@ export default function AccountInfo() {
           </Avatar>
         </ListItemAvatar>
         <ListItemText primary="Email" secondary={localStorage.getItem('sessionemail')} />
-        <Button color="primary" align="right">
+        <Button onClick={handleEmailEdit} color="primary" align="right">
             Edit
         </Button>
       </ListItem>
@@ -219,7 +262,7 @@ export default function AccountInfo() {
           </Avatar>
         </ListItemAvatar>
         <ListItemText primary="Username" secondary= {localStorage.getItem('sessionuname')}/>
-        <Button color="primary" align="right">
+        <Button onClick={handleUnameEdit} color="primary" align="right">
             Edit
         </Button>
       </ListItem>
@@ -230,7 +273,7 @@ export default function AccountInfo() {
           </Avatar>
         </ListItemAvatar>
         <ListItemText primary="Company Name" secondary={localStorage.getItem('sessioncname')} />
-        <Button color="primary" align="right">
+        <Button onClick={handlecompanyEdit} color="primary" align="right">
             Edit
         </Button>
       </ListItem>
@@ -321,7 +364,7 @@ export default function AccountInfo() {
              */}
        
         </DialogContent>
-     <DialogActions>
+            <DialogActions>
           <Button type="submit" color="primary" className={classes.submit} autoFocus>
             Change 
           </Button>
@@ -330,6 +373,171 @@ export default function AccountInfo() {
           </Button>
         </DialogActions>
         </form>
+      </Dialog>
+
+    {/*Company Name edit alert*/}
+    <Dialog
+        open={openCompanyAlert}
+        onClose={handleCompanyClose}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        {/*<form onSubmit={submit} className={classes.form} noValidate>*/}
+        <DialogTitle id="alert-dialog-title">{"Edit"}</DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+          Please enter your new Company Name.
+          </DialogContentText>
+          <TextField
+                variant="outlined"
+                required
+                fullWidth
+                name="cname"
+                //value={values.password}
+                label="Company Name"
+                type="text"
+                id="cname"
+                autoComplete="compnay name"
+                //onChange={handleInputChange}
+            />
+       
+        </DialogContent>
+            <DialogActions>
+          <Button type="submit" color="primary" className={classes.submit} autoFocus>
+            Change 
+          </Button>
+          <Button onClick={handleCompanyClose} color="primary" autoFocus>
+            Cancel
+          </Button>
+        </DialogActions>
+       {/*</Dialog> </form>*/}
+      </Dialog>
+
+      {/*user name edit alert*/}
+    <Dialog
+        open={openUnameAlert}
+        onClose={handleUnameClose}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        {/*<form onSubmit={submit} className={classes.form} noValidate>*/}
+        <DialogTitle id="alert-dialog-title">{"Edit"}</DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+          Please enter your new User Name.
+          </DialogContentText>
+          <TextField
+                variant="outlined"
+                required
+                fullWidth
+                name="uname"
+                //value={values.password}
+                label="User Name"
+                type="text"
+                id="uname"
+                autoComplete="user-name"
+                //onChange={handleInputChange}
+            />
+       
+        </DialogContent>
+            <DialogActions>
+          <Button type="submit" color="primary" className={classes.submit} autoFocus>
+            Change 
+          </Button>
+          <Button onClick={handleUnameClose} color="primary" autoFocus>
+            Cancel
+          </Button>
+        </DialogActions>
+       {/*</Dialog> </form>*/}
+      </Dialog>
+
+      {/*Email edit alert*/}
+    <Dialog
+        open={openEmailAlert}
+        onClose={handleEmailClose}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        {/*<form onSubmit={submit} className={classes.form} noValidate>*/}
+        <DialogTitle id="alert-dialog-title">{"Edit"}</DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+          Please enter your new Email Address.
+          *This will change your sign in information
+          </DialogContentText>
+          <TextField
+                variant="outlined"
+                required
+                fullWidth
+                name="email"
+                //value={values.password}
+                label="Email"
+                type="email"
+                id="email"
+                autoComplete="email"
+                //onChange={handleInputChange}
+            />
+       
+        </DialogContent>
+            <DialogActions>
+          <Button type="submit" color="primary" className={classes.submit} autoFocus>
+            Change 
+          </Button>
+          <Button onClick={handleEmailClose} color="primary" autoFocus>
+            Cancel
+          </Button>
+        </DialogActions>
+       {/*</Dialog> </form>*/}
+      </Dialog>
+
+      {/*Name edit alert*/}
+    <Dialog
+        open={openNameAlert}
+        onClose={handleNameClose}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        {/*<form onSubmit={submit} className={classes.form} noValidate>*/}
+        <DialogTitle id="alert-dialog-title">{"Edit"}</DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+          Please enter your new Name.
+          </DialogContentText>
+          <TextField
+                variant="outlined"
+                required
+                fullWidth
+                name="fname"
+                //value={values.password}
+                label="First Name"
+                type="text"
+                id="fname"
+                autoComplete="first-name"
+                //onChange={handleInputChange}
+            />
+             <TextField
+                variant="outlined"
+                required
+                fullWidth
+                name="lname"
+                //value={values.password}
+                label="Last Name"
+                type="text"
+                id="lname"
+                autoComplete="first-name"
+                //onChange={handleInputChange}
+            />
+       
+        </DialogContent>
+            <DialogActions>
+          <Button type="submit" color="primary" className={classes.submit} autoFocus>
+            Change 
+          </Button>
+          <Button onClick={handleNameClose} color="primary" autoFocus>
+            Cancel
+          </Button>
+        </DialogActions>
+       {/*</Dialog> </form>*/}
       </Dialog>
 
   </React.Fragment>

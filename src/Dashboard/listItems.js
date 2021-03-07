@@ -5,13 +5,9 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import ListSubheader from '@material-ui/core/ListSubheader';
 import DashboardIcon from '@material-ui/icons/Dashboard';
-import PeopleIcon from '@material-ui/icons/People';
-import BarChartIcon from '@material-ui/icons/BarChart';
-import LayersIcon from '@material-ui/icons/Layers';
-import AssignmentIcon from '@material-ui/icons/Assignment';
 import VideoLibraryIcon from '@material-ui/icons/VideoLibrary';
-import SettingsIcon from '@material-ui/icons/Settings';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
+import TheatersIcon from '@material-ui/icons/Theaters';
 
 export const mainListItems = (
   <div>
@@ -30,6 +26,15 @@ export const mainListItems = (
         <VideocamIcon />
       </ListItemIcon>
       <ListItemText primary="View Camera" />
+    </ListItem>
+    </a>
+
+    <a href="/footage1">
+    <ListItem button>
+      <ListItemIcon>
+        <TheatersIcon />
+      </ListItemIcon>
+      <ListItemText primary="View Footage" />
     </ListItem>
     </a>
 

@@ -24,7 +24,8 @@
 
 }
 .btn:hover{
-    background-color: lightgray;
+    /*background-color: lightgray;*/
+    background-color:#823038;
 }
 
 .stop-btn{
@@ -38,7 +39,9 @@
 
 
 .start-btn{
-    background-color: rgb(37, 175, 37);
+   /* background-color: rgb(37, 175, 37);*/
+    background-color: rgb(13, 45, 62);
+    color:white;
 }
 
 .thumbnails {
