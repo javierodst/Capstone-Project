@@ -11,39 +11,39 @@ import TheatersIcon from '@material-ui/icons/Theaters';
 
 export const mainListItems = (
   <div>
-    <a href="/dashboard">
-    <ListItem button>
+    <a href="/dashboard" style={{textDecoration:"none"}}>
+    <ListItem button >
       <ListItemIcon>
-        <DashboardIcon />
+        <DashboardIcon style={{color:"rgb(13, 45, 62)"}}/>
       </ListItemIcon>
-      <ListItemText primary="Dashboard" />
+      <ListItemText style={{color:"rgb(13, 45, 62)"}} primary="Dashboard" />
     </ListItem>
     </a>
     
-    <a href="/stream">
+    <a href="/stream" style={{textDecoration:"none"}}>
     <ListItem button>
       <ListItemIcon>
-        <VideocamIcon />
+        <VideocamIcon style={{color:"rgb(13, 45, 62)"}}/>
       </ListItemIcon>
-      <ListItemText primary="View Camera" />
+      <ListItemText style={{color:"rgb(13, 45, 62)"}} primary="View Camera" />
     </ListItem>
     </a>
 
-    <a href="/footage1">
+    <a href="/footage1" style={{textDecoration:"none"}}>
     <ListItem button>
       <ListItemIcon>
-        <TheatersIcon />
+        <TheatersIcon style={{color:"rgb(13, 45, 62)"}}/>
       </ListItemIcon>
-      <ListItemText primary="View Footage" />
+      <ListItemText style={{color:"rgb(13, 45, 62)"}} primary="View Footage" />
     </ListItem>
     </a>
 
-    <a href="/account">
+    <a href="/account" style={{textDecoration:"none"}}>
     <ListItem button>
       <ListItemIcon>
-        <AccountCircleIcon />
+        <AccountCircleIcon style={{color:"rgb(13, 45, 62)"}}/>
       </ListItemIcon>
-      <ListItemText primary="Account" />
+      <ListItemText  style={{color:"rgb(13, 45, 62)"}} primary="Account" />
     </ListItem>
     </a>
   </div>
@@ -51,32 +51,32 @@ export const mainListItems = (
 
 export const secondaryListItems = (
   <div>
-    <ListSubheader inset>Saved Footage</ListSubheader>
+    <ListSubheader style={{color:"black", fontWeight:"bold", fontSize: "40"}} inset>Saved Footage</ListSubheader>
 
-    <a href="/currentweek">
+    <a href="/currentweek" style={{textDecoration:"none"}}>
     <ListItem button>
       <ListItemIcon>
-        <VideoLibraryIcon />
+        <VideoLibraryIcon style={{color:"rgb(13, 45, 62)"}}/>
       </ListItemIcon>
-      <ListItemText primary="Current Week" />
+      <ListItemText  style={{color:"rgb(13, 45, 62)"}} primary="Current Week" />
     </ListItem>
     </a>
 
-    <a href="/lastweek">
+    <a href="/lastweek" style={{textDecoration:"none"}}>
     <ListItem button>
       <ListItemIcon>
-        <VideoLibraryIcon />
+        <VideoLibraryIcon style={{color:"rgb(13, 45, 62)"}}/>
       </ListItemIcon>
-      <ListItemText primary="Last Week" />
+      <ListItemText  style={{color:"rgb(13, 45, 62)"}} primary="Last Week" />
     </ListItem>
     </a>
     
-    <a href="/footage">
+    <a href="/footage" style={{textDecoration:"none"}}>
     <ListItem button>
       <ListItemIcon>
-        <VideoLibraryIcon />
+        <VideoLibraryIcon style={{color:"rgb(13, 45, 62)"}}/>
       </ListItemIcon>
-      <ListItemText primary="All" />
+      <ListItemText style={{color:"rgb(13, 45, 62)"}} primary="All" />
     </ListItem>
     </a>
   </div>

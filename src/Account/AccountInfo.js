@@ -20,6 +20,7 @@ import TextField from '@material-ui/core/TextField';
 import Grid from '@material-ui/core/Grid';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import axios from 'axios';
+import history from '../history';
 import { Alert, AlertTitle } from '@material-ui/lab';
 
 const textStyle = { //to change signin text color
@@ -45,15 +46,55 @@ const useStyles = makeStyles((theme) => ({
   seeMore: {
     marginTop: theme.spacing(3),
   },
+  icons: {
+    color: "white",
+      position: "relative",
+  },
+  avatars: {
+    backgroundColor: "rgb(13, 45, 62);",
+  },
+  edit: {
+    color: "rgb(13, 45, 62);",
+    "&:hover": {
+        backgroundColor: "#823038",
+        color: "white",
+      },
+  },
+  alert: {
+    backgroundColor: "rgb(13, 45, 62);",
+    color: "white",
+    "&:hover": {
+        backgroundColor: "#823038",
+        color: "white",
+      },
+  },
+  dcontent: {
+    color: "black",
+  },
+  dtitle: {
+    color: "rgb(13, 45, 62);",
+    fontSize: "20",
+    fontWeight: "bold",
+  },
 }));
 
 //properties with default values
 const initialValues = {
   email: localStorage.getItem('sessionemail'),
+  emailNew: '',
+  lastName: '',
+  firstName: '',
   password: '',
   cpassword: '',
+  username: '',
+  companyname: '',
   //error messages
     errors: {
+      firstName: '',
+      lastName: '',
+      email: '',
+      username: '',
+      companyname: '',
       password: '',
       cpassword: ''
   }
@@ -69,6 +110,10 @@ const formValid = (errors) => {
 
   return valid;
 }  
+
+//email regexp
+const validEmailRegex = 
+  RegExp(/^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i);
 
 const passwordRequirements = 
   RegExp("^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})");
@@ -88,6 +133,18 @@ export default function AccountInfo() {
       });
 
       switch (name) {
+        case "firstName":
+        values.errors.firstName = 
+        value.length < 2  
+        ? "minimum 2 characters required"
+        : "";
+      break;
+      case "lastName":
+        values.errors.lastName = 
+        value.length < 3 
+        ? "minimum 3 characters required"
+        : "";
+      break;
         case "password":
           values.errors.password = 
           passwordRequirements.test(value) 
@@ -100,12 +157,28 @@ export default function AccountInfo() {
           ? ""
           : "passwords do not match";
         break;
+        case "emailNew":
+        values.errors.email = 
+        validEmailRegex.test(value) 
+        ? ""
+        : "invalid email address";
+      break;
+      case "username":
+        values.errors.username = 
+        value.length < 3 
+        ? "minimum 3 characters required"
+        : "";
+      break;
+      case "companyname":
+        values.errors.companyname = 
+        value.length < 2  
+        ? "minimum 2 characters required"
+        : "";
+      break;
         default:
         break;
       }
-  
       console.log(values);
-  
     };
 
   //logout alert  
@@ -168,6 +241,7 @@ const handleEmailEdit = () => {
     setNameAlert(false);
   }
 
+  //password submit
   const submit = event =>{
     event.preventDefault(); //stops form from submitting by itself
         //payload is the data that you are sending
@@ -175,8 +249,7 @@ const handleEmailEdit = () => {
             email: values.email,
             cpassword: values.cpassword
       };
-      
-       
+
     //only creates user account if passwords match and form is valid
     if( (formValid(values.errors)) && (payload.cpassword != '')){  
       
@@ -205,8 +278,194 @@ const handleEmailEdit = () => {
       //error message, can add a fancy css pop up
      console.error("FORM INVALID --");
     }
-
   };
+  
+  //name submit
+  const submitName = event =>{
+    event.preventDefault(); //stops form from submitting by itself
+        //payload is the data that you are sending
+          const payload = {
+            email: values.email,
+            firstName: values.firstName,
+            lastName: values.lastName
+  };
+
+  //only creates user account if passwords match and form is valid
+  if( (formValid(values.errors)) && (payload.firstName != '') && (payload.lastName != '')){  
+      
+    //make http call, default uses get
+    axios({
+      url: 'http://localhost:8080/api/editFirstName',
+      method: 'POST',
+      data: payload
+    })
+    .then( res => { 
+      if(res.status === 200){
+        console.log('Data has been sent to the server');
+        <Alert severity="success">
+        <AlertTitle>Success</AlertTitle>
+        This is a success alert — <strong>check it out!</strong>
+      </Alert>
+      }
+    })
+    .catch(()=> {
+      console.log('Internal Server Error');
+      
+    });
+
+     //make http call, default uses get
+     axios({
+      url: 'http://localhost:8080/api/editLastName',
+      method: 'POST',
+      data: payload
+    })
+    .then( res => { 
+      if(res.status === 200){
+        console.log('Data has been sent to the server');
+        localStorage.setItem('sessionfname', payload.firstName);
+        localStorage.setItem('sessionlname', payload.lastName);
+        history.push("/account");
+        handleNameClose();
+        <Alert severity="success">
+        <AlertTitle>Success</AlertTitle>
+        This is a success alert — <strong>check it out!</strong>
+      </Alert>
+      }
+    })
+    .catch(()=> {
+      console.log('Internal Server Error');
+      
+    });
+  }
+  else {
+    //error message, can add a fancy css pop up
+   console.error("FORM INVALID --");
+  }
+}
+      
+  //username submit
+  const submitUserName = event =>{
+    event.preventDefault(); //stops form from submitting by itself
+        //payload is the data that you are sending
+          const payload = {
+            email: values.email,
+            username: values.username
+  };
+
+      //only creates user account if passwords match and form is valid
+      if( (formValid(values.errors)) && (payload.username != '')){  
+      
+        //make http call, default uses get
+        axios({
+          url: 'http://localhost:8080/api/edituserName',
+          method: 'POST',
+          data: payload
+        })
+        .then( res => { 
+          if(res.status === 200){
+            console.log('Data has been sent to the server');
+            localStorage.setItem('sessionuname', payload.username);
+            history.push("/account");
+            handleUnameClose();
+            <Alert severity="success">
+            <AlertTitle>Success</AlertTitle>
+            This is a success alert — <strong>check it out!</strong>
+          </Alert>
+          }
+        })
+        .catch(()=> {
+          console.log('Internal Server Error');
+          
+        });
+      }
+      else {
+        //error message, can add a fancy css pop up
+       console.error("FORM INVALID --");
+      }
+}
+      
+  //email submit
+  const submitEmail = event =>{
+    event.preventDefault(); //stops form from submitting by itself
+        //payload is the data that you are sending
+          const payload = {
+            email: values.email,
+            emailNew: values.emailNew,
+  };
+
+   //only creates user account if passwords match and form is valid
+   if( (formValid(values.errors)) && (payload.email != '') && (payload.emailNew != '')){  
+      
+    //make http call, default uses get
+    axios({
+      url: 'http://localhost:8080/api/editEmail',
+      method: 'POST',
+      data: payload
+    })
+    .then( res => { 
+      if(res.status === 200){
+        console.log('Data has been sent to the server');
+        localStorage.setItem('sessionemail', payload.emailNew);
+        history.push("/account");
+        handleEmailClose();
+        <Alert severity="success">
+        <AlertTitle>Success</AlertTitle>
+        This is a success alert — <strong>check it out!</strong>
+      </Alert>
+      }
+    })
+    .catch(()=> {
+      console.log('Internal Server Error');
+      
+    });
+  }
+  else {
+    //error message, can add a fancy css pop up
+   console.error("FORM INVALID --");
+  }
+
+}
+      
+ //company name submit
+ const submitCompanyName = event =>{
+  event.preventDefault(); //stops form from submitting by itself
+      //payload is the data that you are sending
+        const payload = {
+          email: values.email,
+          companyname: values.companyname
+    };
+ 
+         //only creates user account if passwords match and form is valid
+    if( (formValid(values.errors)) && (payload.companyname != '')){  
+      
+      //make http call, default uses get
+      axios({
+        url: 'http://localhost:8080/api/editCompanyName',
+        method: 'POST',
+        data: payload
+      })
+      .then( res => { 
+        if(res.status === 200){
+          console.log('Data has been sent to the server');
+          localStorage.setItem('sessioncname', payload.companyname);
+          history.push("/account");
+          handleCompanyClose();
+          <Alert severity="success">
+          <AlertTitle>Success</AlertTitle>
+          This is a success alert — <strong>check it out!</strong>
+        </Alert>
+        }
+      })
+      .catch(()=> {
+        console.log('Internal Server Error');
+        
+      });
+    }
+    else {
+      //error message, can add a fancy css pop up
+     console.error("FORM INVALID --");
+    }
+};
 
   //for password visibilityOn/Off
   const usePasswordToggle = () => {
@@ -235,56 +494,56 @@ const handleEmailEdit = () => {
        <List className={classes.root}>
       <ListItem>
         <ListItemAvatar>
-          <Avatar>
-            <FaceIcon />
+          <Avatar className={classes.avatars}>
+            <FaceIcon className={classes.icons}/>
           </Avatar>
         </ListItemAvatar>
         <ListItemText primary="Name" secondary={sessionuser} />
-        <Button onClick={handleNameEdit} color="primary" align="right">
+        <Button onClick={handleNameEdit} color="primary" align="right" className={classes.edit} size="small">
             Edit
         </Button>
       </ListItem>
       <ListItem>
         <ListItemAvatar>
-          <Avatar>
-            <EmailIcon />
+          <Avatar className={classes.avatars}>
+            <EmailIcon className={classes.icons}/>
           </Avatar>
         </ListItemAvatar>
         <ListItemText primary="Email" secondary={localStorage.getItem('sessionemail')} />
-        <Button onClick={handleEmailEdit} color="primary" align="right">
+        <Button onClick={handleEmailEdit} color="primary" align="right" className={classes.edit} size="small">
             Edit
         </Button>
       </ListItem>
       <ListItem>
         <ListItemAvatar>
-          <Avatar>
-            <AccountCircleIcon />
+          <Avatar className={classes.avatars}>
+            <AccountCircleIcon className={classes.icons}/>
           </Avatar>
         </ListItemAvatar>
         <ListItemText primary="Username" secondary= {localStorage.getItem('sessionuname')}/>
-        <Button onClick={handleUnameEdit} color="primary" align="right">
+        <Button onClick={handleUnameEdit} color="primary" align="right" className={classes.edit} size="small"> 
             Edit
         </Button>
       </ListItem>
       <ListItem>
         <ListItemAvatar>
-          <Avatar>
-            <BusinessIcon />
+          <Avatar className={classes.avatars}>
+            <BusinessIcon className={classes.icons}/>
           </Avatar>
         </ListItemAvatar>
         <ListItemText primary="Company Name" secondary={localStorage.getItem('sessioncname')} />
-        <Button onClick={handlecompanyEdit} color="primary" align="right">
+        <Button onClick={handlecompanyEdit} color="primary" align="right" className={classes.edit} size="small">
             Edit
         </Button>
       </ListItem>
       <ListItem>
         <ListItemAvatar>
-          <Avatar>
-            <LockIcon />
+          <Avatar className={classes.avatars}>
+            <LockIcon className={classes.icons}/>
           </Avatar>
         </ListItemAvatar>
         <ListItemText primary="Password"  />
-        <Button onClick={handlepasswordEdit} color="primary" align="right">
+        <Button onClick={handlepasswordEdit} color="primary" align="right" className={classes.edit} size="small">
             Edit
         </Button>
       </ListItem>
@@ -298,9 +557,9 @@ const handleEmailEdit = () => {
         aria-describedby="alert-dialog-description"
       >
         <form onSubmit={submit} className={classes.form} noValidate>
-        <DialogTitle id="alert-dialog-title">{"Edit"}</DialogTitle>
+        <DialogTitle id="alert-dialog-title" className={classes.dtitle}>{"Edit"}</DialogTitle>
         <DialogContent>
-          <DialogContentText id="alert-dialog-description">
+          <DialogContentText className={classes.dcontent} id="alert-dialog-description">
           Please enter your new password and confirm.
           </DialogContentText>
          
@@ -365,10 +624,10 @@ const handleEmailEdit = () => {
        
         </DialogContent>
             <DialogActions>
-          <Button type="submit" color="primary" className={classes.submit} autoFocus>
+          <Button type="submit" color="primary" className={classes.submit}  className={classes.alert} size="small" autoFocus>
             Change 
           </Button>
-          <Button onClick={handleClose} color="primary" autoFocus>
+          <Button onClick={handleClose} color="primary" className={classes.alert} size="small" autoFocus>
             Cancel
           </Button>
         </DialogActions>
@@ -382,35 +641,39 @@ const handleEmailEdit = () => {
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
       >
-        {/*<form onSubmit={submit} className={classes.form} noValidate>*/}
-        <DialogTitle id="alert-dialog-title">{"Edit"}</DialogTitle>
+        <form onSubmit={submitCompanyName} className={classes.form} noValidate>
+        <DialogTitle id="alert-dialog-title" className={classes.dtitle}>{"Edit"}</DialogTitle>
         <DialogContent>
-          <DialogContentText id="alert-dialog-description">
-          Please enter your new Company Name.
+          <DialogContentText className={classes.dcontent} id="alert-dialog-description">
+          Please enter your new company name.
           </DialogContentText>
           <TextField
                 variant="outlined"
                 required
                 fullWidth
-                name="cname"
-                //value={values.password}
+                name="companyname"
+                value={values.companyname}
                 label="Company Name"
-                type="text"
-                id="cname"
-                autoComplete="compnay name"
-                //onChange={handleInputChange}
+                id="companyname"
+                autoComplete="companyname"
+                onChange={handleInputChange}
             />
        
+       {values.errors.companyname.length > 0 && (
+                <span className="errormsg">{values.errors.companyname}</span>
+        )}
+
         </DialogContent>
             <DialogActions>
-          <Button type="submit" color="primary" className={classes.submit} autoFocus>
+          <Button type="submit" color="primary" className={classes.submitCompanyName} className={classes.alert} size="small" autoFocus>
             Change 
           </Button>
-          <Button onClick={handleCompanyClose} color="primary" autoFocus>
+          <Button onClick={handleCompanyClose} color="primary" className={classes.alert} size="small" autoFocus>
             Cancel
           </Button>
         </DialogActions>
-       {/*</Dialog> </form>*/}
+       {/*</Dialog>*/}
+       </form>
       </Dialog>
 
       {/*user name edit alert*/}
@@ -420,35 +683,37 @@ const handleEmailEdit = () => {
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
       >
-        {/*<form onSubmit={submit} className={classes.form} noValidate>*/}
-        <DialogTitle id="alert-dialog-title">{"Edit"}</DialogTitle>
+        <form onSubmit={submitUserName} className={classes.form} noValidate>
+        <DialogTitle id="alert-dialog-title" className={classes.dtitle}>{"Edit"}</DialogTitle>
         <DialogContent>
-          <DialogContentText id="alert-dialog-description">
-          Please enter your new User Name.
+          <DialogContentText className={classes.dcontent} id="alert-dialog-description">
+          Please enter your new username.
           </DialogContentText>
           <TextField
                 variant="outlined"
                 required
                 fullWidth
-                name="uname"
-                //value={values.password}
+                name="username"
+                value={values.username}
                 label="User Name"
-                type="text"
-                id="uname"
-                autoComplete="user-name"
-                //onChange={handleInputChange}
+                id="username"
+                autoComplete="username"
+                onChange={handleInputChange}
             />
-       
+          {values.errors.username.length > 0 && (
+                <span className="errormsg">{values.errors.username}</span>
+            )}
         </DialogContent>
             <DialogActions>
-          <Button type="submit" color="primary" className={classes.submit} autoFocus>
+          <Button type="submit" color="primary" className={classes.submitUserName} className={classes.alert} size="small" autoFocus>
             Change 
           </Button>
-          <Button onClick={handleUnameClose} color="primary" autoFocus>
+          <Button onClick={handleUnameClose} color="primary" className={classes.alert} size="small" autoFocus>
             Cancel
           </Button>
         </DialogActions>
-       {/*</Dialog> </form>*/}
+       {/*</Dialog>*/}
+        </form>
       </Dialog>
 
       {/*Email edit alert*/}
@@ -458,36 +723,40 @@ const handleEmailEdit = () => {
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
       >
-        {/*<form onSubmit={submit} className={classes.form} noValidate>*/}
-        <DialogTitle id="alert-dialog-title">{"Edit"}</DialogTitle>
+        <form onSubmit={submitEmail} className={classes.form} noValidate>
+        <DialogTitle id="alert-dialog-title" className={classes.dtitle}>{"Edit"}</DialogTitle>
         <DialogContent>
-          <DialogContentText id="alert-dialog-description">
-          Please enter your new Email Address.
-          *This will change your sign in information
+          <DialogContentText className={classes.dcontent} id="alert-dialog-description">
+          Please enter your new email address.
+          (*This will change your sign in information)
           </DialogContentText>
           <TextField
                 variant="outlined"
                 required
                 fullWidth
-                name="email"
-                //value={values.password}
+                name="emailNew"
+                value={values.emailNew}
                 label="Email"
                 type="email"
-                id="email"
-                autoComplete="email"
-                //onChange={handleInputChange}
+                id="emailNew"
+                onChange={handleInputChange}
             />
+            
+              {values.errors.email.length > 0 && (
+                <span className="errormsg">{values.errors.email}</span>
+              )}
        
         </DialogContent>
             <DialogActions>
-          <Button type="submit" color="primary" className={classes.submit} autoFocus>
+          <Button type="submit" color="primary" className={classes.submitEmail} className={classes.alert} size="small" autoFocus>
             Change 
           </Button>
-          <Button onClick={handleEmailClose} color="primary" autoFocus>
+          <Button onClick={handleEmailClose} color="primary" className={classes.alert} size="small" autoFocus>
             Cancel
           </Button>
         </DialogActions>
-       {/*</Dialog> </form>*/}
+       {/*</Dialog>*/}
+       </form>
       </Dialog>
 
       {/*Name edit alert*/}
@@ -497,47 +766,61 @@ const handleEmailEdit = () => {
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
       >
-        {/*<form onSubmit={submit} className={classes.form} noValidate>*/}
-        <DialogTitle id="alert-dialog-title">{"Edit"}</DialogTitle>
+        <form onSubmit={submitName} className={classes.form} noValidate>
+        <DialogTitle id="alert-dialog-title" className={classes.dtitle}>{"Edit"}</DialogTitle>
         <DialogContent>
-          <DialogContentText id="alert-dialog-description">
-          Please enter your new Name.
+          <DialogContentText className={classes.dcontent} id="alert-dialog-description">
+          Please enter your new name.
           </DialogContentText>
+
+          <Grid container spacing={1} justify={"center"}>
+          <Grid item xs={10}>
           <TextField
                 variant="outlined"
                 required
                 fullWidth
-                name="fname"
-                //value={values.password}
+                name="firstName"
+                value={values.firstName}
                 label="First Name"
-                type="text"
-                id="fname"
-                autoComplete="first-name"
-                //onChange={handleInputChange}
+                id="firstName"
+                autoComplete="firstName"
+                onChange={handleInputChange}
             />
+
+              {values.errors.firstName.length > 0 && (
+                <span className="errormsg">{values.errors.firstName}</span>
+              )}
+
+            </Grid>
+            <Grid item xs={10}>
              <TextField
                 variant="outlined"
                 required
                 fullWidth
-                name="lname"
-                //value={values.password}
+                name="lastName"
+                value={values.lastName}
                 label="Last Name"
-                type="text"
-                id="lname"
-                autoComplete="first-name"
-                //onChange={handleInputChange}
+                id="lastName"
+                autoComplete="lastName"
+                onChange={handleInputChange}
             />
-       
+              {values.errors.lastName.length > 0 && (
+                <span className="errormsg">{values.errors.lastName}</span>
+              )}
+
+            </Grid>
+       </Grid>
         </DialogContent>
             <DialogActions>
-          <Button type="submit" color="primary" className={classes.submit} autoFocus>
+          <Button type="submit" color="primary" className={classes.submitName} className={classes.alert} size="small" autoFocus>
             Change 
           </Button>
-          <Button onClick={handleNameClose} color="primary" autoFocus>
+          <Button onClick={handleNameClose} color="primary" className={classes.alert} size="small" autoFocus>
             Cancel
           </Button>
         </DialogActions>
-       {/*</Dialog> </form>*/}
+       {/*</Dialog>*/}
+       </form>
       </Dialog>
 
   </React.Fragment>
