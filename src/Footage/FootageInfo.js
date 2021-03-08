@@ -7,6 +7,7 @@ import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import VideoCard from './VideoCard.js'
+import { RoomSharp } from '@material-ui/icons';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -153,6 +154,22 @@ class FootageInfo extends React.Component {
 
   render() {
     var todayArray = new Array();
+    var daysOfWeekArr = new Array();
+
+    for (let i = 0; i < 7; i++) {
+      if (i === 0) {
+        daysOfWeekArr.push(<Tab label="Today" {...a11yProps(i)} />);
+      }
+      else if (i === 1) {
+        daysOfWeekArr.push(<Tab label="Yesterday" {...a11yProps(i)} />);
+      }
+
+      else {
+        daysOfWeekArr.push(<Tab label={TabsDay(i)} {...a11yProps(i)} />);
+      }
+
+    }
+
 
     this.props.videos.map((video, { _id, title, date, keep, path }) => {
       const videoDate = new Date(video.date);
@@ -166,6 +183,24 @@ class FootageInfo extends React.Component {
 
     });
 
+    const vids = (dayIndex) => {
+      var videosArr = new Array();
+
+      this.props.videos.map((video, { _id, title, date, keep, path }) => {
+        var today = new Date();
+        const videoDate = new Date(video.date);
+        console.log(dayIndex);
+        if ((videoDate.getDate()) == (today.getDate() - dayIndex) && videoDate.getMonth() == today.getMonth() && videoDate.getFullYear() == today.getFullYear()) {
+          videosArr.push(<VideoCard video={video} />);
+          console.log("ADDED " + video.title);
+        }
+      });
+
+      return videosArr;
+
+
+    }
+
     const todayVideos = todayArray.map((video) => {
 
       return (
@@ -174,6 +209,14 @@ class FootageInfo extends React.Component {
         </div>
       );
     });
+
+    const days = daysOfWeekArr.map((day) => {
+      return (
+        day
+      );
+    });
+
+
     return (
 
       // <div className={classes.root}>
@@ -189,37 +232,31 @@ class FootageInfo extends React.Component {
             scrollButtons="auto"
             aria-label="scrollable auto tabs example"
           >
-            <Tab label="Today" {...a11yProps(0)} />
-            <Tab label="Yesterday" {...a11yProps(1)} />
-            <Tab label={TabsDay(2)} {...a11yProps(2)} />
-            <Tab label={TabsDay(3)} {...a11yProps(3)} />
-            <Tab label={TabsDay(4)} {...a11yProps(4)} />
-            <Tab label={TabsDay(5)} {...a11yProps(5)} />
-            <Tab label={TabsDay(6)} {...a11yProps(6)} />
+            {days}
           </Tabs>
         </AppBar>
         <TabPanel value={this.state.value} index={0}>
-          {todayVideos}
+          {vids(0)}
         </TabPanel>
         <TabPanel value={this.state.value} index={1}>
-          <VideoCard />
+          {vids(1)}
         </TabPanel>
         <TabPanel value={this.state.value} index={2}>
-          <VideoCard />
+          {vids(2)}
         </TabPanel>
         <TabPanel value={this.state.value} index={3}>
-          <VideoCard />
+          {vids(3)}
         </TabPanel>
         <TabPanel value={this.state.value} index={4}>
-          <VideoCard />
+          {vids(4)}
         </TabPanel>
         <TabPanel value={this.state.value} index={5}>
-          <VideoCard />
+          {vids(5)}
         </TabPanel>
         <TabPanel value={this.state.value} index={6}>
-          <VideoCard />
+          {vids(6)}
         </TabPanel>
-      </div>
+      </div >
     );
   }
 }

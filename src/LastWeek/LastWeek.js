@@ -8,7 +8,7 @@ class LastWeek extends React.Component {
     render() {
         return (
             <div>
-                <DashboardMaterial name="Saved Footage from Last Week" componentToPassDown={<LastWeekInfo />}  />
+                <DashboardMaterial name="Saved Footage from Last Week" componentToPassDown={<LastWeekInfo />} />
             </div>
         );
     }

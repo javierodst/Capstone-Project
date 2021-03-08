@@ -26,7 +26,6 @@ function App() {
         <Route exact path='/signin' render={() => <SignIn />} />
         <Route exact path='/stream' render={() => <StreamHeader />} />
         <Route exact path='/footage' render={() => <SavedFootage />} />
-        <Route exact path='/footage1' render={() => <Footage />} />
         <Route exact path='/signup' render={() => <SignUp />} />
         <Route exact path='/dashboard' render={() => <Dashboard />} />
         <Route exact path='/about' render={() => <About />} />
@@ -34,7 +33,7 @@ function App() {
         <Route exact path='/services' render={() => <Services />} />
         <Route exact path='/forgotpassword' render={() => <ForgotPassword />} />
         <Route exact path='/account' render={() => <Account />} />
-        <Route exact path='/currentweek' render={() => <CurrentWeek />} />
+        <Route exact path='/currentweek' render={() => <Footage />} />
         <Route exact path='/lastweek' render={() => <LastWeek />} />
 
       </Switch>
