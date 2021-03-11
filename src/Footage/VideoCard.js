@@ -40,9 +40,75 @@ export default function VideoCard({ video }) {
 
   const [values, setValues] = useState(initialValues);
 
-  function handleSaved(text) {
-    values.text = text;
+  var handleSaved = (id, title, date, keep, path) => {
+    toogleKeep(id, title, date, keep, path);
   }
+
+  var url = "https://nameless-ravine-22066.herokuapp.com/api/video/keep/";
+
+  var toogleKeep = (id, title, date, keep, path) => {
+    console.log(url + id);
+    let vidBody = {
+      '_id': id,
+      'title': title,
+      'date': date,
+      'keep': keep,
+      'path': path
+    }
+    console.log(JSON.stringify(vidBody));
+    fetch(url + id, {
+      method: 'PUT',
+      headers: { "Content-Type": 'application/json' },
+      body: JSON.stringify(vidBody)
+    })
+      .then(response => {
+        this.setState({ httpStatusCode: response.status, httpStatusOk: response.ok });
+        if (response.ok) {
+
+          return response.json();
+
+        }
+
+        else if (response.status === 404) {
+          throw Error("HTTP 404, Not found");
+        }
+
+        else {
+          throw Error(`HTTP ${response.status}, ${response.statusText}`);
+        }
+      })
+      .then(responseData => {
+        this.setState({ videos: responseData });
+      })
+      .catch(error => {
+        console.log(error);
+      })
+  }
+
+  var kept = () => {
+    if (video.keep) {
+      return (
+        <div>
+          <p>Video will be kept</p>
+          <Button size="small" className={classes.btn} onClick={() => handleSaved(video._id, video.title, video.date, video.keep, video.path)}>
+            Un-save
+          </Button>
+        </div>
+
+      );
+    }
+    else {
+      return (
+        <div>
+          <p>Video is not kept</p>
+          <Button size="small" className={classes.btn} onClick={() => handleSaved(video._id, video.title, video.date, video.keep, video.path)}>
+            Save
+          </Button>
+        </div>
+      );
+    }
+  }
+
   return (
     <Card className={classes.root}>
       <CardActionArea>
@@ -64,9 +130,7 @@ export default function VideoCard({ video }) {
         </CardContent>
       </CardActionArea>
       <CardActions>
-        <Button size="small" className={classes.btn} onClick={handleSaved("saved")}>
-          {values.text}
-        </Button>
+        {kept()}
       </CardActions>
     </Card>
   );

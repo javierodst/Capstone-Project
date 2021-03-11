@@ -148,8 +148,6 @@ class FootageInfo extends React.Component {
     this.setState({ value: newValue });
   };
 
-  url = "https://nameless-ravine-22066.herokuapp.com/api/video/keep/";
-
 
 
   render() {
