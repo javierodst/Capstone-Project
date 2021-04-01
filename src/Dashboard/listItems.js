@@ -8,26 +8,36 @@ import DashboardIcon from '@material-ui/icons/Dashboard';
 import VideoLibraryIcon from '@material-ui/icons/VideoLibrary';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import TheatersIcon from '@material-ui/icons/Theaters';
+import history from '../history';
+import auth from '../ProtectedRoutes/auth';
+
+const dash = () => {
+  auth.isAuthenticated(() => { history.push("/dashboard");});
+};
+
+const stream = () => {
+  auth.isAuthenticated(() => { history.push("/stream");});
+};
 
 export const mainListItems = (
+
+
   <div>
-    <a href="/dashboard" style={{textDecoration:"none"}}>
-    <ListItem button >
+    <a href={auth.isAuthenticated(() => {history.push("/dashboard")})}></a>
+    <ListItem button>
       <ListItemIcon>
         <DashboardIcon style={{color:"rgb(13, 45, 62)"}}/>
       </ListItemIcon>
       <ListItemText style={{color:"rgb(13, 45, 62)"}} primary="Dashboard" />
     </ListItem>
-    </a>
     
-    <a href="/stream" style={{textDecoration:"none"}}>
+    <a href={auth.isAuthenticated(() => {history.push("/stream")})}></a>
     <ListItem button>
       <ListItemIcon>
         <VideocamIcon style={{color:"rgb(13, 45, 62)"}}/>
       </ListItemIcon>
       <ListItemText style={{color:"rgb(13, 45, 62)"}} primary="View Camera" />
     </ListItem>
-    </a>
 
     <a href="/footage1" style={{textDecoration:"none"}}>
     <ListItem button>
@@ -51,7 +61,7 @@ export const mainListItems = (
 
 export const secondaryListItems = (
   <div>
-    <ListSubheader style={{color:"black", fontWeight:"bold", fontSize: "40"}} inset>Saved Footage</ListSubheader>
+    <ListSubheader style={{color:"black", fontWeight:"bold", fontSize: "40"}} inset>Footage</ListSubheader>
 
     <a href="/currentweek" style={{textDecoration:"none"}}>
     <ListItem button>

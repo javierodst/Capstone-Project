@@ -1,6 +1,6 @@
 
 import './App.css';
-import { Route, Switch, withRouter } from 'react-router-dom';
+import { Route, Switch, withRouter, BrowserRouter } from 'react-router-dom';
 import Home from './Home/Home.js';
 import SignIn from './SignIn/SignIn.js';
 import SignUp from './SignUp/SignUp.js';
@@ -15,6 +15,8 @@ import Account from './Account/Account.js';
 import CurrentWeek from './CurrentWeek/CurrentWeek.js';
 import LastWeek from './LastWeek/LastWeek.js';
 import Footage from './Footage/Footage.js';
+import { ProtectedRoute } from './ProtectedRoutes/protectedroute.js';
+import { NavLink } from 'react-router-dom';
 
 
 function App() {
@@ -22,23 +24,35 @@ function App() {
     <div className="App">
 
       <Switch>
-        <Route exact path='/' render={() => <Home />} />
-        <Route exact path='/signin' render={() => <SignIn />} />
-        <Route exact path='/stream' render={() => <StreamHeader />} />
-        <Route exact path='/footage' render={() => <SavedFootage />} />
-        <Route exact path='/signup' render={() => <SignUp />} />
-        <Route exact path='/dashboard' render={() => <Dashboard />} />
+      <Route exact path='/' render={() => <Home />} />
         <Route exact path='/about' render={() => <About />} />
         <Route exact path='/contact' render={() => <Contact />} />
         <Route exact path='/services' render={() => <Services />} />
+        <Route exact path='/signup' render={() => <SignUp />} />
+        <Route exact path='/signin' render={() => <SignIn />} />
         <Route exact path='/forgotpassword' render={() => <ForgotPassword />} />
-        <Route exact path='/account' render={() => <Account />} />
-        <Route exact path='/currentweek' render={() => <Footage />} />
-        <Route exact path='/lastweek' render={() => <LastWeek />} />
+        
+       {/* //protected routes*/}
+        <ProtectedRoute exact path='/dashboard' component={Dashboard} />
+        <ProtectedRoute exact path='/stream' component={StreamHeader} />
+        <ProtectedRoute exact path='/footage' component={SavedFootage} />
+        <ProtectedRoute exact path='/account' component={Account} />
+        <ProtectedRoute exact path='/currentweek' component={Footage} />
+        <ProtectedRoute exact path='/lastweek' component={LastWeek} />
 
-      </Switch>
+</Switch>
 
+{/*
+      <Nav>
+        <NavLink exact={true} activeClassName='is-active' to='/'>Home</NavLink>
+        <NavLink activeClassName='is-active' to='/about'>About</NavLink>
+      </Nav>
+
+      <Match pattern='/' exactly component={Home} />
+      <Match pattern='/about' exactly component={About} />
     </div>
+    </BrowserRouter>*/}
+       </div>
   );
 }
 

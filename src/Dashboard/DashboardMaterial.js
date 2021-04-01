@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -22,6 +22,7 @@ import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import { mainListItems, secondaryListItems } from './listItems';
+import axios from 'axios';
 //import Chart from './Chart';
 import Deposits from './Deposits';
 //import Orders from './Orders';
@@ -32,6 +33,15 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
+import VideocamIcon from '@material-ui/icons/Videocam';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import ListItemText from '@material-ui/core/ListItemText';
+import ListSubheader from '@material-ui/core/ListSubheader';
+import DashboardIcon from '@material-ui/icons/Dashboard';
+import VideoLibraryIcon from '@material-ui/icons/VideoLibrary';
+import TheatersIcon from '@material-ui/icons/Theaters';
+import auth from '../ProtectedRoutes/auth';
 
 // We can use inline-style to overide styles
 const headerStyle = {  //to change signin button color
@@ -183,8 +193,41 @@ export default function DashboardMaterial(props, {componentToPassDown}) {
   };
   const SignOut = () => {
     setOpenAlert(false);
-    history.push("/signin");
+    localStorage.setItem('sessionfname', '');
+    localStorage.setItem('sessionlname', '');
+    localStorage.setItem('sessionemail', '');
+    localStorage.setItem('sessionuname', '');
+    localStorage.setItem('sessioncname', '');
+   // localStorage.setItem('sessionauth', false);
+    //history.push("/signin");
+    auth.logout(() => { history.push("/signin");});
   };
+
+  //navigation callbacks for protected routes
+  const dash = () => {
+    auth.login(() => { history.push("/dashboard");});
+  };
+
+  const stream = () => {
+    auth.login(() => { history.push("/stream");});
+  };
+
+  const account = () => {
+    auth.login(() => { history.push("/account");});
+  };
+
+  const current = () => {
+    auth.login(() => { history.push("/currentweek");});
+  };
+
+  const last = () => {
+    auth.login(() => { history.push("/lastweek");});
+  };
+
+  const footage = () => {
+    auth.login(() => { history.push("/footage");});
+  };
+
   const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
 
   return (
@@ -229,9 +272,60 @@ export default function DashboardMaterial(props, {componentToPassDown}) {
           </IconButton>
         </div>
         <Divider />
-        <List>{mainListItems}</List>
+        {/*<List>{mainListItems}</List>
         <Divider />
-        <List>{secondaryListItems}</List>
+      <List>{secondaryListItems}</List>*/}
+      <List>
+      <ListItem button onClick={dash}>
+      <ListItemIcon>
+        <DashboardIcon style={{color:"rgb(13, 45, 62)"}}/>
+      </ListItemIcon>
+      <ListItemText style={{color:"rgb(13, 45, 62)"}} primary="Dashboard" />
+    </ListItem>
+    
+    <ListItem button onClick={stream}>
+      <ListItemIcon>
+        <VideocamIcon style={{color:"rgb(13, 45, 62)"}}/>
+      </ListItemIcon>
+      <ListItemText style={{color:"rgb(13, 45, 62)"}} primary="View Camera" />
+    </ListItem>
+
+    <ListItem button onClick={account}>
+      <ListItemIcon>
+        <AccountCircleIcon style={{color:"rgb(13, 45, 62)"}}/>
+      </ListItemIcon>
+      <ListItemText  style={{color:"rgb(13, 45, 62)"}} primary="Account" />
+    </ListItem>
+
+        </List>
+        <Divider />
+        
+        <List>
+        <ListSubheader style={{color:"black", fontWeight:"bold", fontSize: "40"}} inset>Footage</ListSubheader>
+
+              <ListItem button onClick={current}>
+              <ListItemIcon>
+                <VideoLibraryIcon style={{color:"rgb(13, 45, 62)"}}/>
+                  </ListItemIcon>
+                <ListItemText  style={{color:"rgb(13, 45, 62)"}} primary="Current Week" />
+                  </ListItem>
+
+         
+          <ListItem button onClick={last}>
+          <ListItemIcon>
+          <VideoLibraryIcon style={{color:"rgb(13, 45, 62)"}}/>
+          </ListItemIcon>
+          <ListItemText  style={{color:"rgb(13, 45, 62)"}} primary="Last Week" />
+          </ListItem>
+
+         
+          <ListItem button onClick={footage}>
+            <ListItemIcon>
+            <VideoLibraryIcon style={{color:"rgb(13, 45, 62)"}}/>
+          </ListItemIcon>
+            <ListItemText style={{color:"rgb(13, 45, 62)"}} primary="Saved Footage" />
+          </ListItem>
+        </List>
       </Drawer>
       {/*signout alert*/}
       <Dialog

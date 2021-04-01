@@ -19,6 +19,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import axios from 'axios';
 import history from '../history';
 import { red } from '@material-ui/core/colors';
+import auth from '../ProtectedRoutes/auth';
 
 // We can use inline-style to overide styles
 const buttonStyle = {  //to change signin button color
@@ -163,8 +164,9 @@ export default function SignInSide() {
           localStorage.setItem('sessionemail', sessionemail);
           localStorage.setItem('sessionuname', sessionuname);
           localStorage.setItem('sessioncname', sessioncname);
-
-          history.push("/dashboard");
+        //  localStorage.setItem('sessionauth', true);
+          auth.login(() => { history.push("/dashboard");});
+          //history.push("/dashboard");
         }
       })
       .catch(()=> {
