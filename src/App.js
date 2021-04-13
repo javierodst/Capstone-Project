@@ -33,12 +33,12 @@ function App() {
         <Route exact path='/forgotpassword' render={() => <ForgotPassword />} />
         
        {/* //protected routes*/}
-        <ProtectedRoute exact path='/dashboard' component={Dashboard} />
-        <ProtectedRoute exact path='/stream' component={StreamHeader} />
-        <ProtectedRoute exact path='/footage' component={SavedFootage} />
-        <ProtectedRoute exact path='/account' component={Account} />
-        <ProtectedRoute exact path='/currentweek' component={Footage} />
-        <ProtectedRoute exact path='/lastweek' component={LastWeek} />
+        <Route exact path='/dashboard' component={Dashboard} />
+        <Route exact path='/stream' component={StreamHeader} />
+        <Route exact path='/footage' component={SavedFootage} />
+        <Route exact path='/account' component={Account} />
+        <Route exact path='/currentweek' component={Footage} />
+        <Route exact path='/lastweek' component={LastWeek} />
 
 </Switch>
 

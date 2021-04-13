@@ -1,9 +1,39 @@
 import React from 'react';
-import Album from './Album.js';
-import './SavedFootage.css';
-import Header from '../Header/Header.js';
 
-import VideoList from '../VideoList/VideoList.js';
+import VideoCard from '../Footage/VideoCard.js';
+
+import Typography from '@material-ui/core/Typography';
+import Box from '@material-ui/core/Box';
+import PropTypes from 'prop-types';
+import SavedFootageList from './SavedFootage-list.js';
+
+import DashboardMaterial from '../Dashboard/DashboardMaterial.js';
+
+function TabPanel(props) {
+    const { children, value, index, ...other } = props;
+  
+    return (
+      <div
+        role="tabpanel"
+        hidden={value !== index}
+        id={`scrollable-auto-tabpanel-${index}`}
+        aria-labelledby={`scrollable-auto-tab-${index}`}
+        {...other}
+      >
+        {value === index && (
+          <Box p={3}>
+            <Typography>{children}</Typography>
+          </Box>
+        )}
+      </div>
+    );
+  }
+  
+  TabPanel.propTypes = {
+    children: PropTypes.node,
+    index: PropTypes.any.isRequired,
+    value: PropTypes.any.isRequired,
+  };
 
 class SavedFootage extends React.Component {
 
@@ -48,22 +78,30 @@ class SavedFootage extends React.Component {
 
     }
 
+    
+    vids(){
+        var videosArr = new Array();
+        console.log("video");
+        this.state.videos.map((video, { _id, title, date, keep, path }) => {
+            console.log(video);
+            videosArr.push(
+
+                    <VideoCard video={video} />
+
+            );
+        });
+        return videosArr;
+    }
+
     render() {
         return (
-            <div >
-                <Header />
-                <div className="main">
-                    <h1>Saved Footage</h1>
-                    <br />
-                    <div className="list">
-                        <VideoList className="footageVideo" videos={this.state.videos} />
-                    </div>
-
-                </div>
-
-
-
+            <div>
+                <DashboardMaterial name="Saved Footage" componentToPassDown={<SavedFootageList videos={this.state.videos} />} />
             </div>
+
+
+
+
             /*
             <div>
                 <Album />

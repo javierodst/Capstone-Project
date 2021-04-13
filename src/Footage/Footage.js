@@ -8,6 +8,7 @@ class Footage extends React.Component {
     state = { videos: [] };
 
     url = "https://nameless-ravine-22066.herokuapp.com/api/videos";
+    
 
     componentDidMount() {
         fetch(this.url)
@@ -34,6 +35,7 @@ class Footage extends React.Component {
                 console.log(error);
             })
     }
+
 
 
 
