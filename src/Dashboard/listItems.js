@@ -71,7 +71,7 @@ export const secondaryListItems = (
       <ListItemText  style={{color:"rgb(13, 45, 62)"}} primary="Current Week" />
     </ListItem>
     </a>
-
+{/* 
     <a href="/lastweek" style={{textDecoration:"none"}}>
     <ListItem button>
       <ListItemIcon>
@@ -79,7 +79,7 @@ export const secondaryListItems = (
       </ListItemIcon>
       <ListItemText  style={{color:"rgb(13, 45, 62)"}} primary="Last Week" />
     </ListItem>
-    </a>
+    </a> */}
     
     <a href="/footage" style={{textDecoration:"none"}}>
     <ListItem button>

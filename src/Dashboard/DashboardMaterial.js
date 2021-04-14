@@ -309,14 +309,14 @@ export default function DashboardMaterial(props, {componentToPassDown}) {
                   </ListItemIcon>
                 <ListItemText  style={{color:"rgb(13, 45, 62)"}} primary="Current Week" />
                   </ListItem>
-
+{/* 
          
           <ListItem button onClick={last}>
           <ListItemIcon>
           <VideoLibraryIcon style={{color:"rgb(13, 45, 62)"}}/>
           </ListItemIcon>
           <ListItemText  style={{color:"rgb(13, 45, 62)"}} primary="Last Week" />
-          </ListItem>
+          </ListItem> */}
 
          
           <ListItem button onClick={footage}>

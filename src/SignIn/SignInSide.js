@@ -144,7 +144,7 @@ export default function SignInSide() {
 
       //make http call, default uses get
       axios({
-        url: 'http://localhost:8080/api/login',
+        url: 'https://blooming-eyrie-08565.herokuapp.com/api/login',
         method: 'POST',
         data: payload
       })
@@ -181,7 +181,7 @@ export default function SignInSide() {
 
 //if refresh the page user stays logged in
 useEffect(()=> {
-  axios.get("http://localhost:8080/api/login").then((response) =>{
+  axios.get("https://blooming-eyrie-08565.herokuapp.com/api/login").then((response) =>{
     console.log(response);
   })
 }, [])

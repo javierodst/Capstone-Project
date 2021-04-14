@@ -33,12 +33,14 @@ function App() {
         <Route exact path='/forgotpassword' render={() => <ForgotPassword />} />
         
        {/* //protected routes*/}
-        <Route exact path='/dashboard' component={Dashboard} />
-        <Route exact path='/stream' component={StreamHeader} />
-        <Route exact path='/footage' component={SavedFootage} />
-        <Route exact path='/account' component={Account} />
-        <Route exact path='/currentweek' component={Footage} />
-        <Route exact path='/lastweek' component={LastWeek} />
+        <ProtectedRoute exact path='/dashboard' component={Dashboard} />
+        {/* <ProtectedRoute exact path='/stream' component={StreamHeader} /> */}
+        <ProtectedRoute exact path="/stream" component={() => {window.location.href = 'http://192.168.0.134:8080/view-stream.html';
+        return null;}} />
+        <ProtectedRoute exact path='/footage' component={SavedFootage} />
+        <ProtectedRoute exact path='/account' component={Account} />
+        <ProtectedRoute exact path='/currentweek' component={Footage} />
+        {/* <ProtectedRoute exact path='/lastweek' component={LastWeek} /> */}
 
 </Switch>
 

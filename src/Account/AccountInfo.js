@@ -255,7 +255,7 @@ const handleEmailEdit = () => {
       
       //make http call, default uses get
       axios({
-        url: 'http://localhost:8080/api/editPassword',
+        url: 'https://blooming-eyrie-08565.herokuapp.com/api/editPassword',
         method: 'POST',
         data: payload
       })
@@ -295,7 +295,7 @@ const handleEmailEdit = () => {
       
     //make http call, default uses get
     axios({
-      url: 'http://localhost:8080/api/editFirstName',
+      url: 'https://blooming-eyrie-08565.herokuapp.com/api/editFirstName',
       method: 'POST',
       data: payload
     })
@@ -315,7 +315,7 @@ const handleEmailEdit = () => {
 
      //make http call, default uses get
      axios({
-      url: 'http://localhost:8080/api/editLastName',
+      url: 'https://blooming-eyrie-08565.herokuapp.com/api/editLastName',
       method: 'POST',
       data: payload
     })
@@ -357,7 +357,7 @@ const handleEmailEdit = () => {
       
         //make http call, default uses get
         axios({
-          url: 'http://localhost:8080/api/edituserName',
+          url: 'https://blooming-eyrie-08565.herokuapp.com/api/edituserName',
           method: 'POST',
           data: payload
         })
@@ -398,7 +398,7 @@ const handleEmailEdit = () => {
       
     //make http call, default uses get
     axios({
-      url: 'http://localhost:8080/api/editEmail',
+      url: 'https://blooming-eyrie-08565.herokuapp.com/api/editEmail',
       method: 'POST',
       data: payload
     })
@@ -440,7 +440,7 @@ const handleEmailEdit = () => {
       
       //make http call, default uses get
       axios({
-        url: 'http://localhost:8080/api/editCompanyName',
+        url: 'https://blooming-eyrie-08565.herokuapp.com/api/editCompanyName',
         method: 'POST',
         data: payload
       })

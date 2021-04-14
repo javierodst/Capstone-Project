@@ -204,7 +204,7 @@ export default function SignUpMaterial(props) {
       
       //make http call, default uses get
       axios({
-        url: 'http://localhost:8080/api/register',
+        url: 'https://blooming-eyrie-08565.herokuapp.com/api/register',
         method: 'POST',
         data: payload
       })

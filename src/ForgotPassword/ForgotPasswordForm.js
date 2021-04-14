@@ -148,7 +148,7 @@ export default function ForgotPasswordForm() {
 
       //make http call, default uses get
       axios({
-        url: 'http://localhost:8080/api/forgotpassword',
+        url: 'https://blooming-eyrie-08565.herokuapp.com/api/forgotpassword',
         method: 'POST',
         data: payload
       })
