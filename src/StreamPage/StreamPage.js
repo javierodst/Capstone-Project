@@ -63,11 +63,11 @@ class StreamPage extends React.Component {
 
                     </video> */}
 
-                    <iframe src="http://192.168.0.134:8080/view-stream.html" height="480" width="640" scrolling="no" />
+                    <iframe className="feed" src="http://192.168.0.134:8080/view-stream.html" height="480" width="640" scrolling="no" />
 
                 </div>
-{/* 
-                <div className="playerInput">
+
+                {/* <div className="playerInput">
                     {this.state.playing ? (
                         <div>
                             <br />
