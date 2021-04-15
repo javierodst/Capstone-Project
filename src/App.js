@@ -34,9 +34,9 @@ function App() {
         
        {/* //protected routes*/}
         <ProtectedRoute exact path='/dashboard' component={Dashboard} />
-        {/* <ProtectedRoute exact path='/stream' component={StreamHeader} /> */}
-        <ProtectedRoute exact path="/stream" component={() => {window.location.href = 'http://192.168.0.134:8080/view-stream.html';
-        return null;}} />
+        <ProtectedRoute exact path='/stream' component={StreamHeader} />
+        {/* <ProtectedRoute exact path="/stream" component={() => {window.location.href = 'http://192.168.0.134:8080/view-stream.html';
+        return null;}} /> */}
         <ProtectedRoute exact path='/footage' component={SavedFootage} />
         <ProtectedRoute exact path='/account' component={Account} />
         <ProtectedRoute exact path='/currentweek' component={Footage} />

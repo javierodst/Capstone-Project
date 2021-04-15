@@ -52,8 +52,8 @@ class StreamPage extends React.Component {
                 
               {/* <h2>Stream</h2>*/}
                 <div className="player">
-
-                    <video
+                    
+                    {/* <video
                         src={this.state.videoSrc}
                         height={720}
                         width={1280}
@@ -61,10 +61,12 @@ class StreamPage extends React.Component {
                         className="feed"
                     >
 
-                    </video>
+                    </video> */}
+
+                    <iframe src="http://192.168.0.134:8080/view-stream.html" height="480" width="640" scrolling="no" />
 
                 </div>
-
+{/* 
                 <div className="playerInput">
                     {this.state.playing ? (
                         <div>
@@ -79,7 +81,7 @@ class StreamPage extends React.Component {
                                 <a onClick={this.startStream} className="btn start-btn">Start</a>
                             </div>
                         )}
-                </div>
+                </div> */}
 
              </div>
                         
